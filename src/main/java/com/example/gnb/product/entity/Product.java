@@ -1,10 +1,11 @@
 package com.example.gnb.product.entity;
 
 import jakarta.persistence.*;
-import jdk.jfr.Timestamp;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 @Getter
@@ -36,8 +37,8 @@ public class Product {
     @Setter
     private String is_free_shipping;
     @Setter
-    @CreatedDate
-    private LocalDateTime created_At;
+    @CreationTimestamp
+    private Timestamp created_At;
 
     @Builder
     public Product(String product_name, int selling_price, int shipping_charge, String is_vat, int sales_expenses,
