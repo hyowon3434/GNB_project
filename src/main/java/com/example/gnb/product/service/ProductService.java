@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 
 @Service
 @RequiredArgsConstructor
@@ -31,5 +33,11 @@ public class ProductService {
                         .build();
 
         return productRepository.save(product);
+    }
+
+    // 전체 상품정보 조회
+    public List<Product> selectProduct(){
+        List<Product> selectProductResponses = productRepository.findAll();
+        return selectProductResponses;
     }
 }
