@@ -3,8 +3,10 @@ package com.example.gnb.product.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
@@ -39,6 +41,10 @@ public class Product {
     @Setter
     @CreationTimestamp
     private Timestamp created_At;
+
+    @Setter
+    @UpdateTimestamp
+    private Timestamp updated_At;
 
     @Builder
     public Product(String product_name, int selling_price, int shipping_charge, String is_vat, int sales_expenses,
