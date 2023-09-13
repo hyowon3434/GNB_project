@@ -6,6 +6,7 @@ import com.example.gnb.product.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -36,8 +37,15 @@ public class ProductService {
     }
 
     // 전체 상품정보 조회
-    public List<Product> selectProduct(){
+    public List<Product> selectAllProduct(){
         List<Product> selectProductResponses = productRepository.findAll();
         return selectProductResponses;
     }
+
+    // 선택 상품정보 조회
+    public Product selectOneProduct(Long product_id){
+         return productRepository.findById(product_id).get();
+    }
+
+
 }

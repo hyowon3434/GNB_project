@@ -23,7 +23,13 @@ public class ProductController {
 
     // 전체 상품정보 조회
     @GetMapping
-    public List<Product> selectProduct(){
-        return productService.selectProduct();
+    public List<Product> selectAllProduct(){
+        return productService.selectAllProduct();
+    }
+
+    // 선택된 상품정보 조회
+    @GetMapping("/{product_id}")
+    public Product selectOneProduct(@PathVariable("product_id") Long product_id){
+        return productService.selectOneProduct(product_id);
     }
 }
