@@ -66,5 +66,12 @@ public class ProductService {
         return productRepository.findAll();
     }
 
+    // 선택된 상품정보 삭제
+    public Product deleteSelectedProduct(Long product_id){
+        Product product = productRepository.findById(product_id).get();
+        productRepository.deleteById(product_id);
+        return product;
+    }
+
 
 }

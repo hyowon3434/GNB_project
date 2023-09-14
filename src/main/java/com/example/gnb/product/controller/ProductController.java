@@ -34,9 +34,16 @@ public class ProductController {
         return productService.selectOneProduct(product_id);
     }
 
-    // 선택된 상품정조 수정
+    // 선택된 상품정보 수정
     @PutMapping("/{product_id}")
     public List<Product> modifySelectedProduct(@PathVariable("product_id") Long product_id, @RequestBody UpdateProductRequest request){
         return productService.modifySelectedProduct(product_id, request);
     }
+
+    // 선택된 상품정보 삭제
+    @DeleteMapping("/{product_id}")
+    public Product deleteSelectedProduct(@PathVariable("product_id") Long product_id){
+        return productService.deleteSelectedProduct(product_id);
+    }
+
 }
