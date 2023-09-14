@@ -1,6 +1,7 @@
 package com.example.gnb.product.service;
 
 import com.example.gnb.product.dto.CreateProductRequest;
+import com.example.gnb.product.dto.UpdateProductRequest;
 import com.example.gnb.product.entity.Product;
 import com.example.gnb.product.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
@@ -45,6 +46,24 @@ public class ProductService {
     // 선택 상품정보 조회
     public Product selectOneProduct(Long product_id){
          return productRepository.findById(product_id).get();
+    }
+
+    // 선택된 상품정보 수정
+    public List<Product> modifySelectedProduct(Long product_id, UpdateProductRequest request){
+        Product product = productRepository.findById(product_id).get();
+        product.setProduct_name(request.getProduct_name());
+        product.setSelling_price(request.getSelling_price());
+        product.setShipping_charge(request.getShipping_charge());
+        product.setIs_vat(request.getIs_vat());
+        product.setSales_expenses(request.getSales_expenses());
+        product.setExtra_expenses(request.getExtra_expenses());
+        product.setPlatform_fee(request.getPlatform_fee());
+        product.setPlatform_fee_per(request.getPlatform_fee_per());
+        product.setIs_free_shipping(request.getIs_free_shipping());
+
+        productRepository.save(product);
+
+        return productRepository.findAll();
     }
 
 

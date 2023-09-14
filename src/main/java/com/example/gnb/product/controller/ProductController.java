@@ -1,6 +1,7 @@
 package com.example.gnb.product.controller;
 
 import com.example.gnb.product.dto.CreateProductRequest;
+import com.example.gnb.product.dto.UpdateProductRequest;
 import com.example.gnb.product.entity.Product;
 import com.example.gnb.product.service.ProductService;
 import lombok.RequiredArgsConstructor;
@@ -31,5 +32,11 @@ public class ProductController {
     @GetMapping("/{product_id}")
     public Product selectOneProduct(@PathVariable("product_id") Long product_id){
         return productService.selectOneProduct(product_id);
+    }
+
+    // 선택된 상품정조 수정
+    @PutMapping("/{product_id}")
+    public List<Product> modifySelectedProduct(@PathVariable("product_id") Long product_id, @RequestBody UpdateProductRequest request){
+        return productService.modifySelectedProduct(product_id, request);
     }
 }
