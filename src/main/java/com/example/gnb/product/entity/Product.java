@@ -4,11 +4,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.data.annotation.CreatedDate;
 
-import java.sql.Time;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -38,11 +35,8 @@ public class Product {
     private float platform_fee_per;
     @Setter
     private String is_free_shipping;
-    @Setter
     @CreationTimestamp
     private Timestamp created_At;
-
-    @Setter
     @UpdateTimestamp
     private Timestamp updated_At;
 
