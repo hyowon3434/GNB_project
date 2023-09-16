@@ -46,4 +46,9 @@ public class ProductController {
         return productService.deleteSelectedProduct(product_id);
     }
 
+    // 전체 상품정보 삭제
+    @DeleteMapping
+    public void deleteAllProduct(){
+        productService.deleteAllProduct();
+    }
 }

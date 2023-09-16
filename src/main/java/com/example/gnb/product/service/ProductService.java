@@ -73,5 +73,10 @@ public class ProductService {
         return product;
     }
 
+    // 전체 상품정보 삭제
+    public void deleteAllProduct(){
+        productRepository.deleteAll();
+    }
+
 
 }
