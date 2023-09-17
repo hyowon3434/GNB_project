@@ -7,6 +7,7 @@ public class UpdateProductRequest {
 
     private String product_name;
     private int selling_price;
+    private int purchase_price;
     private int shipping_charge;
     private String is_vat;
     private int sales_expenses;

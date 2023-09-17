@@ -22,6 +22,8 @@ public class Product {
     @Setter
     private int selling_price;
     @Setter
+    private int purchase_price;
+    @Setter
     private int shipping_charge;
     @Setter
     private String is_vat;
@@ -41,10 +43,11 @@ public class Product {
     private Timestamp updated_At;
 
     @Builder
-    public Product(String product_name, int selling_price, int shipping_charge, String is_vat, int sales_expenses,
-                    int extra_expenses, int platform_fee, float platform_fee_per, String is_free_shipping){
+    public Product(String product_name, int selling_price, int purchase_price, int shipping_charge, String is_vat,
+                   int sales_expenses, int extra_expenses, int platform_fee, float platform_fee_per, String is_free_shipping){
         this.product_name = product_name;
         this.selling_price = selling_price;
+        this.purchase_price = purchase_price;
         this.shipping_charge = shipping_charge;
         this.is_vat = is_vat;
         this.sales_expenses = sales_expenses;
