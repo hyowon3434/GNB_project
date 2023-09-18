@@ -41,10 +41,20 @@ public class Product {
     private Timestamp created_At;
     @UpdateTimestamp
     private Timestamp updated_At;
+    @Setter
+    @Column
+    private int vat_invoice;
+    @Setter
+    private int tax_service_payment;
+    @Setter
+    private int net_profit;
+    @Setter
+    private float margin_Rate;
 
     @Builder
     public Product(String product_name, int selling_price, int purchase_price, int shipping_charge, String is_vat,
-                   int sales_expenses, int extra_expenses, int platform_fee, float platform_fee_per, String is_free_shipping){
+                   int sales_expenses, int extra_expenses, int platform_fee, float platform_fee_per, String is_free_shipping
+                    , int vat_invoice, int tax_service_payment, int net_profit, float margin_Rate){
         this.product_name = product_name;
         this.selling_price = selling_price;
         this.purchase_price = purchase_price;
@@ -55,6 +65,10 @@ public class Product {
         this.platform_fee = platform_fee;
         this.platform_fee_per = platform_fee_per;
         this.is_free_shipping = is_free_shipping;
+        this.vat_invoice = vat_invoice;
+        this.tax_service_payment = tax_service_payment;
+        this.net_profit = net_profit;
+        this.margin_Rate = margin_Rate;
     }
 
 }
