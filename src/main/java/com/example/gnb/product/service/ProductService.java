@@ -20,25 +20,24 @@ public class ProductService {
 
     // 상품정보 등록
     public Product createProduct(CreateProductRequest request){
-        int vat_invoice, tax_service_payment, net_profit;
+        int vat_invoice, tax_service_payment;
+        float net_profit;
         float margin_rate;
+        int expenses;
 
         // 세금계산서 발급  = 상품 매입가의 10%
         vat_invoice = (int) (request.getPurchase_price() * 0.1);
 
         // 국세청 납부
-        // 판맥가 - 매입가 X 0.1
+        // 판매가 - 매입가 X 0.1
         tax_service_payment = (int) ((request.getSelling_price() - request.getPurchase_price()) * 0.1);
-
+        expenses = (request.getPurchase_price() + (vat_invoice + tax_service_payment) + request.getSales_expenses() + request.getExtra_expenses() +
+                request.getPlatform_fee() + 3000);
         //판매 순이익 = (상품판매가+배송비) - (매입가 + 부가가치세(세금계산서 발급 + 국세청 납부)
         // + 포장, 사은품 비용 + 기타비용 + 플랫폼 수수료 + 무료배송 비용)
-        net_profit = (request.getSelling_price() + request.getShipping_charge()) - (request.getPurchase_price() +
-                (vat_invoice + tax_service_payment) + request.getSales_expenses() + request.getExtra_expenses() +
-                request.getPlatform_fee() + 3000);
+        net_profit = (request.getSelling_price() + request.getShipping_charge()) - expenses;
 
-        margin_rate =  ((float) (request.getSelling_price() - (request.getPurchase_price() + (vat_invoice + tax_service_payment) +
-                        request.getSales_expenses() + request.getExtra_expenses() + request.getPlatform_fee() + 3000))
-                        / (float)request.getSelling_price() * 100);
+        margin_rate =  (net_profit / request.getSelling_price()) * 100;
 
         Product product = Product.builder()
                         .product_name(request.getProduct_name())
@@ -53,7 +52,7 @@ public class ProductService {
                         .is_free_shipping(request.getIs_free_shipping())
                         .vat_invoice(vat_invoice)
                         .tax_service_payment(tax_service_payment)
-                        .net_profit(net_profit)
+                        .net_profit((int)net_profit)
                         .margin_Rate(margin_rate)
                         .build();
 
