@@ -1,4 +1,4 @@
-package com.example.gnb.expense.repository;
+package com.example.gnb.expense.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -18,7 +18,7 @@ public class Expense {
     private String usage_content;
     private Timestamp usedAt;
     private Long usagePrice;
-    private  String expenseMemo;
+    private String expenseMemo;
 
     @Builder
     public Expense(Long expenseId, String expenseType, String usage_content,
