@@ -31,4 +31,14 @@ public class ExpenseService {
 
         return expenseRepository.findById(saved.getExpenseId()).get();
     }
+
+    // 전체 경비지출내역 조회
+    public List<Expense> findAllExpenses(){
+        return expenseRepository.findAll();
+    }
+
+    // 선택 경비지출내역 조회
+    public Expense findSelectedExpense(Long id){
+        return expenseRepository.findById(id).get();
+    }
 }

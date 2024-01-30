@@ -4,10 +4,7 @@ import com.example.gnb.expense.dto.RegisterExpenseRequest;
 import com.example.gnb.expense.entity.Expense;
 import com.example.gnb.expense.service.ExpenseService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,6 +20,19 @@ public class ExpenseController {
     public Expense registerExpense(@RequestBody RegisterExpenseRequest registerExpenseRequest){
         Expense registeredExpense = expenseService.createExpense(registerExpenseRequest);
         return registeredExpense;
+    }
+
+    // 전체 경비지출내역 조회 기능
+    @GetMapping
+    public List<Expense> getAllExpenses(){
+        return expenseService.findAllExpenses();
+    }
+
+    // 선택 경비지출내역 조회
+    @GetMapping("/{expense_id}")
+    public Expense getSelectedExepnse(@PathVariable("expense_id") Long expense_id){
+
+        return expenseService.findSelectedExpense(expense_id);
     }
 
 }
