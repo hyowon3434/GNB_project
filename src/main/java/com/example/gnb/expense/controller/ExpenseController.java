@@ -42,4 +42,10 @@ public class ExpenseController {
         return expenseService.modifyExpense(expense_id, request);
     }
 
+    // 선택 경비지출내역 삭제
+    @DeleteMapping("/{expense_id}")
+    public List<Expense> deleteSelectedExpense(@PathVariable("expense_id") Long expense_id){
+        return expenseService.deleteExpense(expense_id);
+    }
+
 }

@@ -56,4 +56,10 @@ public class ExpenseService {
 
        return expenseRepository.findAll();
     }
+
+    // 선택 경비지출내역 삭제
+    public List<Expense> deleteExpense(Long expense_id){
+        expenseRepository.deleteById(expense_id);
+        return expenseRepository.findAll();
+    }
 }
