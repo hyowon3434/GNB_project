@@ -14,10 +14,15 @@ public class Expense {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long expenseId;
+    @Setter
     private String expenseType;
+    @Setter
     private String usage_content;
+    @Setter
     private Timestamp usedAt;
+    @Setter
     private Long usagePrice;
+    @Setter
     private String expenseMemo;
 
     @Builder
