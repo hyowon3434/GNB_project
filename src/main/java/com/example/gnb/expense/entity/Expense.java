@@ -13,16 +13,21 @@ public class Expense {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false)
     private Long expenseId;
     @Setter
+    @Column(nullable = false)
     private String expenseType;
     @Setter
+    @Column(nullable = false)
     private String usageContent;
     @Setter
     private Timestamp usedAt;
     @Setter
+    @Column(nullable = false)
     private Long usagePrice;
     @Setter
+    @Column(nullable = false)
     private String expenseMemo;
 
     @Builder

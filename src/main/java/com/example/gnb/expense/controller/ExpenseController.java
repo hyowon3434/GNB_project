@@ -1,5 +1,6 @@
 package com.example.gnb.expense.controller;
 
+import com.example.gnb.expense.dto.ModifyExpenseRequest;
 import com.example.gnb.expense.dto.RegisterExpenseRequest;
 import com.example.gnb.expense.entity.Expense;
 import com.example.gnb.expense.service.ExpenseService;
@@ -31,8 +32,14 @@ public class ExpenseController {
     // 선택 경비지출내역 조회
     @GetMapping("/{expense_id}")
     public Expense getSelectedExepnse(@PathVariable("expense_id") Long expense_id){
-
         return expenseService.findSelectedExpense(expense_id);
+    }
+
+    // 선택 경비지출내역 수정
+    @PutMapping("/{expense_id}")
+    public List<Expense> modifySelectedExpense(@PathVariable("expense_id") Long expense_id,
+                                         @RequestBody ModifyExpenseRequest request){
+        return expenseService.modifyExpense(expense_id, request);
     }
 
 }
