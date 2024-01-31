@@ -48,4 +48,10 @@ public class ExpenseController {
         return expenseService.deleteExpense(expense_id);
     }
 
+    // 전체 경비지출내역 삭제
+    @DeleteMapping
+    public List<Expense> deletAllExpenses(){
+        return expenseService.deleteExpenses();
+    }
+
 }

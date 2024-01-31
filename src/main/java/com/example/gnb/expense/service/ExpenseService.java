@@ -62,4 +62,10 @@ public class ExpenseService {
         expenseRepository.deleteById(expense_id);
         return expenseRepository.findAll();
     }
+
+    // 전체 경비지출내역 삭제
+    public List<Expense> deleteExpenses(){
+        expenseRepository.deleteAll();
+        return expenseRepository.findAll();
+    }
 }
