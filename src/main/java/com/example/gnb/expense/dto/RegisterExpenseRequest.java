@@ -6,7 +6,7 @@ import lombok.Getter;
 public class RegisterExpenseRequest {
 
     private String expenseType;
-    private String usage_content;
+    private String usageContent;
     private Long usagePrice;
     private String expenseMemo;
 }

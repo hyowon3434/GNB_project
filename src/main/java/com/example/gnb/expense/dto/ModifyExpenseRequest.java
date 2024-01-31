@@ -8,7 +8,7 @@ import java.sql.Timestamp;
 public class ModifyExpenseRequest {
 
     private String expenseType;
-    private String usage_content;
+    private String usageContent;
     private Timestamp usedAt;
     private Long usagePrice;
     private String expenseMemo;

@@ -17,7 +17,7 @@ public class Expense {
     @Setter
     private String expenseType;
     @Setter
-    private String usage_content;
+    private String usageContent;
     @Setter
     private Timestamp usedAt;
     @Setter
@@ -30,7 +30,7 @@ public class Expense {
                    Timestamp usedAt, Long usagePrice, String expenseMemo){
         this.expenseId = expenseId;
         this.expenseType = expenseType;
-        this.usage_content = usage_content;
+        this.usageContent = usage_content;
         this.usedAt = usedAt;
         this.usagePrice = usagePrice;
         this.expenseMemo = expenseMemo;
