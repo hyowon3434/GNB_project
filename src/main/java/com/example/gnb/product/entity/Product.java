@@ -26,7 +26,7 @@ public class Product {
     @Setter
     private int shipping_charge;
     @Setter
-    private String is_vat;
+    private boolean is_vat;
     @Setter
     private int sales_expenses;
     @Setter
@@ -36,7 +36,7 @@ public class Product {
     @Setter
     private float platform_fee_per;
     @Setter
-    private String is_free_shipping;
+    private boolean is_free_shipping;
     @CreationTimestamp
     private Timestamp created_At;
     @UpdateTimestamp
@@ -52,8 +52,8 @@ public class Product {
     private float margin_Rate;
 
     @Builder
-    public Product(String product_name, int selling_price, int purchase_price, int shipping_charge, String is_vat,
-                   int sales_expenses, int extra_expenses, int platform_fee, float platform_fee_per, String is_free_shipping
+    public Product(String product_name, int selling_price, int purchase_price, int shipping_charge, boolean is_vat,
+                   int sales_expenses, int extra_expenses, int platform_fee, float platform_fee_per, boolean is_free_shipping
                     , int vat_invoice, int tax_service_payment, int net_profit, float margin_Rate){
         this.product_name = product_name;
         this.selling_price = selling_price;
