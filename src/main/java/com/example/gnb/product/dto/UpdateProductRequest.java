@@ -9,11 +9,11 @@ public class UpdateProductRequest {
     private int selling_price;
     private int purchase_price;
     private int shipping_charge;
-    private boolean is_vat;
+    private String is_vat;
     private int sales_expenses;
     private int extra_expenses;
     private int platform_fee;
     private float platform_fee_per;
-    private boolean is_free_shipping;
+    private String is_free_shipping;
 
 }
