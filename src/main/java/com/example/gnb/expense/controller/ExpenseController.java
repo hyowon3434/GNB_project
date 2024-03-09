@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/expense")
@@ -24,12 +25,14 @@ public class ExpenseController {
     }
 
     // 전체 경비지출내역 조회 기능
+    @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
     @GetMapping
     public List<Expense> getAllExpenses(){
         return expenseService.findAllExpenses();
     }
 
     // 선택 경비지출내역 조회
+    @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
     @GetMapping("/{expense_id}")
     public Expense getSelectedExepnse(@PathVariable("expense_id") Long expense_id){
         return expenseService.findSelectedExpense(expense_id);
