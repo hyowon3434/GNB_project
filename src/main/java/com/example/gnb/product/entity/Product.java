@@ -37,9 +37,9 @@ public class Product {
     private float platform_fee_per;
     @Setter
     private String is_free_shipping;
-    @CreationTimestamp
+    @CreationTimestamp // insert 쿼리문이 발생했을때, 현재시간 값을 적용
     private Timestamp created_At;
-    @UpdateTimestamp
+    @UpdateTimestamp // update 쿼리문이 발생했을때, 현재시간 값을 적용
     private Timestamp updated_At;
     @Setter
     @Column
