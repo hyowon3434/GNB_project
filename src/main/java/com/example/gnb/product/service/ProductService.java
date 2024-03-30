@@ -40,20 +40,20 @@ public class ProductService {
         margin_rate =  (net_profit / request.getSelling_price()) * 100;
 
         Product product = Product.builder()
-                        .product_name(request.getProduct_name())
-                        .selling_price(request.getSelling_price())
-                        .purchase_price(request.getPurchase_price())
-                        .shipping_charge(request.getShipping_charge())
-                        .is_vat(request.getIs_vat())
-                        .sales_expenses(request.getSales_expenses())
-                        .extra_expenses(request.getExtra_expenses())
-                        .platform_fee(request.getPlatform_fee())
-                        .platform_fee_per(request.getPlatform_fee_per())
-                        .is_free_shipping(request.getIs_free_shipping())
-                        .vat_invoice(vat_invoice)
-                        .tax_service_payment(tax_service_payment)
-                        .net_profit((int)net_profit)
-                        .margin_Rate(margin_rate)
+                        .productName(request.getProduct_name())
+                        .sellingPrice(request.getSelling_price())
+                        .purchasePrice(request.getPurchase_price())
+                        .shippingCharge(request.getShipping_charge())
+                        .isVat(request.getIs_vat())
+                        .salesExpenses(request.getSales_expenses())
+                        .extraExpenses(request.getExtra_expenses())
+                        .platformFee(request.getPlatform_fee())
+                        .platformFeePer(request.getPlatform_fee_per())
+                        .isFreeShipping(request.getIs_free_shipping())
+                        .vatInvoice(vat_invoice)
+                        .taxServicePayment(tax_service_payment)
+                        .netProfit((int)net_profit)
+                        .marginRate(margin_rate)
                         .build();
 
         Product savedProduct = productRepository.save(product);
@@ -75,15 +75,15 @@ public class ProductService {
     // 선택된 상품정보 수정
     public List<Product> modifySelectedProduct(Long product_id, UpdateProductRequest request){
         Product product = productRepository.findById(product_id).get();
-        product.setProduct_name(request.getProduct_name());
-        product.setSelling_price(request.getSelling_price());
-        product.setShipping_charge(request.getShipping_charge());
-        product.setIs_vat(request.getIs_vat());
-        product.setSales_expenses(request.getSales_expenses());
-        product.setExtra_expenses(request.getExtra_expenses());
-        product.setPlatform_fee(request.getPlatform_fee());
-        product.setPlatform_fee_per(request.getPlatform_fee_per());
-        product.setIs_free_shipping(request.getIs_free_shipping());
+        product.setProductName(request.getProduct_name());
+        product.setSellingPrice(request.getSelling_price());
+        product.setShippingCharge(request.getShipping_charge());
+        product.setIsVat(request.getIs_vat());
+        product.setSalesExpenses(request.getSales_expenses());
+        product.setExtraExpenses(request.getExtra_expenses());
+        product.setPlatformFee(request.getPlatform_fee());
+        product.setPlatformFeePer(request.getPlatform_fee_per());
+        product.setIsFreeShipping(request.getIs_free_shipping());
 
         productRepository.save(product);
 
