@@ -13,3 +13,8 @@ spring:
 #  level:
 #    org:
 #      springframework: DEBUG
+kakao:
+  authUrl: https://kauth.kakao.com/oauth/token
+  userApiUrl: https://kapi.kakao.com/v2/user/me
+  restapiKey: c8017caa6e04c7dc19743f43ce9def17
+  redirectUrl: http://localhost:3000/callback
