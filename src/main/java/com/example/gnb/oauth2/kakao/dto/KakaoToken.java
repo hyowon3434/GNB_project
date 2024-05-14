@@ -4,9 +4,11 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Getter
 @NoArgsConstructor
+@ToString
 @JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class KakaoToken {
     private String tokenType;
@@ -24,9 +26,6 @@ public class KakaoToken {
         this.refreshToken = refreshToken;
     }
 
-    private KakaoToken getToken(final String code){
-        try {
-            return client
-        }
-    }
+
+
 }
