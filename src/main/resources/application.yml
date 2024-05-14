@@ -2,19 +2,28 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
 #   aws 배포후 아래 환경변수 자동 적용
+# 강효원 계정 db 정보
 #    url: jdbc:mysql://awseb-e-b6xc7wnmgh-stack-awsebrdsdatabase-xxbfyo1ibyze.cdw8a8mo2my2.ap-northeast-2.rds.amazonaws.com:3306/ebdb
 #    username: root
 #    password: dnsgkdtlf11
+
+# 메리아빈 계정 db 정보
+    url: jdbc:mysql://awseb-e-akrbpymbje-stack-awsebrdsdatabase-pbwkmjdgv4np.crokg6k2i2ot.ap-northeast-2.rds.amazonaws.com:3306/ebdb
+    username: root
+    password: dnsgkdtlf11
+
   jpa:
     hibernate:
       dialect: org.hibernate.dialect.MySQL5Dialect
       ddl-auto: update
-#logging:
-#  level:
-#    org:
-#      springframework: DEBUG
+    generate-ddl: true
+
+logging:
+  level:
+    org:
+      springframework: DEBUG
 kakao:
   authUrl: https://kauth.kakao.com/oauth/token
   userApiUrl: https://kapi.kakao.com/v2/user/me
-  restapiKey: c8017caa6e04c7dc19743f43ce9def17
-  redirectUrl: http://localhost:3000/callback
+  restapiKey: 97699105ffc3f34a8e3f05c017b2fe9b
+  redirectUrl: http://localhost:8080/callback
