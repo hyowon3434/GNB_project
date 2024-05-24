@@ -12,49 +12,52 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin(value = "*")
 @RequestMapping("/expense")
 public class ExpenseController {
 
     private final ExpenseService expenseService;
 
     // 경비지출 등록 기능
-    @PostMapping
-    public Expense registerExpense(@RequestBody RegisterExpenseRequest registerExpenseRequest){
-        Expense registeredExpense = expenseService.createExpense(registerExpenseRequest);
+    @PostMapping("/{userId}")
+    public Expense registerExpense(@RequestBody RegisterExpenseRequest registerExpenseRequest,
+                                   @PathVariable("userId") Long userId){
+        Expense registeredExpense = expenseService.createExpense(registerExpenseRequest, userId);
         return registeredExpense;
     }
 
     // 전체 경비지출내역 조회 기능
-    @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
-    @GetMapping
-    public List<Expense> getAllExpenses(){
-        return expenseService.findAllExpenses();
+    @GetMapping("/{userId}")
+    public List<Expense> getAllExpenses(@PathVariable("userId") Long userId){
+        return expenseService.findAllExpenses(userId);
     }
 
     // 선택 경비지출내역 조회
-    @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
-    @GetMapping("/{expense_id}")
-    public Expense getSelectedExepnse(@PathVariable("expense_id") Long expense_id){
-        return expenseService.findSelectedExpense(expense_id);
+    @GetMapping("/{expenseId}/{userId}")
+    public Expense getSelectedExepnse(@PathVariable("expenseId") Long expenseId,
+                                      @PathVariable("userId") Long userId){
+        return expenseService.findSelectedExpense(expenseId, userId);
     }
 
     // 선택 경비지출내역 수정
-    @PutMapping("/{expense_id}")
-    public List<Expense> modifySelectedExpense(@PathVariable("expense_id") Long expense_id,
-                                         @RequestBody ModifyExpenseRequest request){
-        return expenseService.modifyExpense(expense_id, request);
+    @PutMapping("/{expenseId}/{userId}")
+    public List<Expense> modifySelectedExpense(@PathVariable("expenseId") Long expenseId,
+                                               @PathVariable("userId") Long userId,
+                                               @RequestBody ModifyExpenseRequest request){
+        return expenseService.modifyExpense(expenseId,userId, request);
     }
 
     // 선택 경비지출내역 삭제
-    @DeleteMapping("/{expense_id}")
-    public List<Expense> deleteSelectedExpense(@PathVariable("expense_id") Long expense_id){
-        return expenseService.deleteExpense(expense_id);
+    @DeleteMapping("/{expenseId}/{userId}")
+    public List<Expense> deleteSelectedExpense(@PathVariable("expenseId") Long expenseId,
+                                               @PathVariable("userId") Long userId){
+        return expenseService.deleteExpense(expenseId, userId);
     }
 
     // 전체 경비지출내역 삭제
-    @DeleteMapping
-    public List<Expense> deletAllExpenses(){
-        return expenseService.deleteExpenses();
+    @DeleteMapping("/{userId}")
+    public List<Expense> deletAllExpenses(@PathVariable("userId") Long userId){
+        return expenseService.deleteExpenses(userId);
     }
 
 }
