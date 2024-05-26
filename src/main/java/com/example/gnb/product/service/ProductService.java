@@ -19,7 +19,7 @@ public class ProductService {
     private final ProductRepository productRepository;
 
     // 상품정보 등록
-    public Product createProduct(CreateProductRequest request){
+    public Product createProduct(CreateProductRequest request, Long userId){
         int vat_invoice, tax_service_payment;
         float net_profit;
         float margin_rate;
@@ -41,6 +41,7 @@ public class ProductService {
 
         Product product = Product.builder()
                         .product_name(request.getProduct_name())
+                        .userId(userId)
                         .selling_price(request.getSelling_price())
                         .purchase_price(request.getPurchase_price())
                         .shipping_charge(request.getShipping_charge())
@@ -62,19 +63,20 @@ public class ProductService {
     }
 
     // 전체 상품정보 조회
-    public List<Product> selectAllProduct(){
-        List<Product> selectProductResponses = productRepository.findAll();
+    public List<Product> selectAllProduct(Long userId){
+        List<Product> selectProductResponses = productRepository.findByUserId(userId);
         return selectProductResponses;
     }
 
     // 선택 상품정보 조회
-    public Product selectOneProduct(Long product_id){
-         return productRepository.findById(product_id).get();
+    public Product selectOneProduct(Long productId, Long userId){
+         return productRepository.findByProduct_idAndUserId(productId, userId);
     }
 
     // 선택된 상품정보 수정
-    public List<Product> modifySelectedProduct(Long product_id, UpdateProductRequest request){
-        Product product = productRepository.findById(product_id).get();
+    public List<Product> modifySelectedProduct(Long product_id, Long userId, UpdateProductRequest request){
+        Product product = productRepository.findByProduct_idAndUserId(product_id, userId);
+        product.setUserId(userId);
         product.setProduct_name(request.getProduct_name());
         product.setSelling_price(request.getSelling_price());
         product.setShipping_charge(request.getShipping_charge());
@@ -87,19 +89,18 @@ public class ProductService {
 
         productRepository.save(product);
 
-        return productRepository.findAll();
+        return productRepository.findByUserId(userId);
     }
 
     // 선택된 상품정보 삭제
-    public Product deleteSelectedProduct(Long product_id){
-        Product product = productRepository.findById(product_id).get();
-        productRepository.deleteById(product_id);
-        return product;
+    public Product deleteSelectedProduct(Long productId, Long userId){
+       return productRepository.deleteProductByProduct_idAndUserId(productId, userId);
+
     }
 
     // 전체 상품정보 삭제
-    public void deleteAllProduct(){
-        productRepository.deleteAll();
+    public void deleteAllProduct(Long userId){
+        productRepository.deleteProductByUserId(userId);
     }
 
 
