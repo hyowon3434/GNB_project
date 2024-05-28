@@ -25,7 +25,7 @@ public class ProductController {
     }
 
     // 전체 상품정보 조회
-    @GetMapping
+    @GetMapping("/{userId}")
     public List<Product> selectAllProduct(@PathVariable("userId") Long userId){
         return productService.selectAllProduct(userId);
     }
