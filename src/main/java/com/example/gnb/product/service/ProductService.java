@@ -73,7 +73,7 @@ public class ProductService {
     }
 
     // 선택된 상품정보 수정
-    public List<Product> modifySelectedProduct(Long product_id, UpdateProductRequest request){
+    public List<Product> modifySelectedProduct(Long product_id, Long userId, UpdateProductRequest request){
         Product product = productRepository.findById(product_id).get();
         product.setProductName(request.getProduct_name());
         product.setSellingPrice(request.getSelling_price());
