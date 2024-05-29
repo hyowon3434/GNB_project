@@ -21,58 +21,58 @@ public class Product {
     @Setter
     private Long userId;
     @Setter
-    private String product_name;
+    private String productName;
     @Setter
-    private int selling_price;
+    private int sellingPrice;
     @Setter
-    private int purchase_price;
+    private int purchasePrice;
     @Setter
-    private int shipping_charge;
+    private int shippingCharge;
     @Setter
-    private String is_vat;
+    private String isVat;
     @Setter
-    private int sales_expenses;
+    private int salesExpenses;
     @Setter
-    private int extra_expenses;
+    private int extraExpenses;
     @Setter
-    private int platform_fee;
+    private int platformFee;
     @Setter
-    private float platform_fee_per;
+    private float platformFeePer;
     @Setter
-    private String is_free_shipping;
+    private String isFreeShipping;
     @CreationTimestamp // insert 쿼리문이 발생했을때, 현재시간 값을 적용
-    private Timestamp created_At;
+    private Timestamp createdAt;
     @UpdateTimestamp // update 쿼리문이 발생했을때, 현재시간 값을 적용
-    private Timestamp updated_At;
+    private Timestamp updatedAt;
     @Setter
     @Column
-    private int vat_invoice;
+    private int vatInvoice;
     @Setter
-    private int tax_service_payment;
+    private int taxServicePayment;
     @Setter
-    private int net_profit;
+    private int netProfit;
     @Setter
-    private float margin_Rate;
+    private float marginRate;
 
     @Builder
-    public Product(String product_name, Long userId, int selling_price, int purchase_price, int shipping_charge, String is_vat,
-                   int sales_expenses, int extra_expenses, int platform_fee, float platform_fee_per, String is_free_shipping
-                    , int vat_invoice, int tax_service_payment, int net_profit, float margin_Rate){
-        this.product_name = product_name;
-        this.userId = userId;
-        this.selling_price = selling_price;
-        this.purchase_price = purchase_price;
-        this.shipping_charge = shipping_charge;
-        this.is_vat = is_vat;
-        this.sales_expenses = sales_expenses;
-        this.extra_expenses = extra_expenses;
-        this.platform_fee = platform_fee;
-        this.platform_fee_per = platform_fee_per;
-        this.is_free_shipping = is_free_shipping;
-        this.vat_invoice = vat_invoice;
-        this.tax_service_payment = tax_service_payment;
-        this.net_profit = net_profit;
-        this.margin_Rate = margin_Rate;
+    public Product(String productName, int sellingPrice, int purchasePrice, int shippingCharge, String isVat,
+                   int salesExpenses, int extraExpenses, int platformFee, float platformFeePer, String isFreeShipping
+                    , int vatInvoice, int taxServicePayment, int netProfit, float marginRate){
+        this.productName = productName;
+        this.sellingPrice = sellingPrice;
+        this.purchasePrice = purchasePrice;
+        this.shippingCharge = shippingCharge;
+        this.isVat = isVat;
+        this.salesExpenses = salesExpenses;
+        this.extraExpenses = extraExpenses;
+        this.platformFee = platformFee;
+        this.platformFeePer = platformFeePer;
+        this.isFreeShipping = isFreeShipping;
+        this.vatInvoice = vatInvoice;
+        this.taxServicePayment = taxServicePayment;
+        this.netProfit = netProfit;
+        this.marginRate = marginRate;
+
     }
 
 }

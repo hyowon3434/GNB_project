@@ -2,16 +2,22 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
 #   aws 배포후 아래 환경변수 자동 적용
-#    url: jdbc:mysql://localhost:3306/gnb_local
+# 강효원 계정 db 정보
+#    url: jdbc:mysql://awseb-e-b6xc7wnmgh-stack-awsebrdsdatabase-xxbfyo1ibyze.cdw8a8mo2my2.ap-northeast-2.rds.amazonaws.com:3306/ebdb
 #    username: root
 #    password: dnsgkdtlf11
+
+# 메리아빈 계정 db 정보
+    url: jdbc:mysql://awseb-e-akrbpymbje-stack-awsebrdsdatabase-pbwkmjdgv4np.crokg6k2i2ot.ap-northeast-2.rds.amazonaws.com:3306/ebdb
+    username: root
+    password: dnsgkdtlf11
 
   jpa:
     hibernate:
       dialect: org.hibernate.dialect.MySQL5Dialect
       ddl-auto: update
 
-#logging:
-#  level:
-#    org:
-#      springframework: DEBUG
+logging:
+  level:
+    org:
+      springframework: DEBUG
