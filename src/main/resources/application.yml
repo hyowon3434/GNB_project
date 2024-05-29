@@ -16,14 +16,8 @@ spring:
     hibernate:
       dialect: org.hibernate.dialect.MySQL5Dialect
       ddl-auto: update
-    generate-ddl: true
 
 logging:
   level:
     org:
       springframework: DEBUG
-kakao:
-  authUrl: https://kauth.kakao.com/oauth/token
-  userApiUrl: https://kapi.kakao.com/v2/user/me
-  restapiKey: 97699105ffc3f34a8e3f05c017b2fe9b
-  redirectUrl: http://localhost:8080/callback

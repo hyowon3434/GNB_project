@@ -17,6 +17,9 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "product_id")
     private Long product_id;
+    @Column(nullable = false)
+    @Setter
+    private Long userId;
     @Setter
     private String productName;
     @Setter
@@ -69,6 +72,7 @@ public class Product {
         this.taxServicePayment = taxServicePayment;
         this.netProfit = netProfit;
         this.marginRate = marginRate;
+
     }
 
 }

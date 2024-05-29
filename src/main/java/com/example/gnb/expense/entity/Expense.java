@@ -14,6 +14,8 @@ public class Expense {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
     private Long expenseId;
+    @Column(nullable = false)
+    private Long userId;
     @Setter
     @Column(nullable = false)
     private String expenseType;
@@ -30,9 +32,10 @@ public class Expense {
     private String expenseMemo;
 
     @Builder
-    public Expense(Long expenseId, String expenseType, String usage_content,
+    public Expense(Long expenseId, Long userId, String expenseType, String usage_content,
                    Timestamp usedAt, Long usagePrice, String expenseMemo){
         this.expenseId = expenseId;
+        this.userId = userId;
         this.expenseType = expenseType;
         this.usageContent = usage_content;
         this.usedAt = usedAt;

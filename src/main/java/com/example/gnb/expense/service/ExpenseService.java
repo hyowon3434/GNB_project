@@ -18,9 +18,10 @@ public class ExpenseService {
     private final ExpenseRepository expenseRepository;
 
     // 경비지출내역 등록
-    public Expense createExpense(RegisterExpenseRequest request){
+    public Expense createExpense(RegisterExpenseRequest request, Long userId){
 
         Expense expense = Expense.builder()
+                        .userId(userId)
                         .expenseMemo(request.getExpenseMemo())
                         .expenseType(request.getExpenseType())
                         .usage_content(request.getUsageContent())
@@ -34,18 +35,19 @@ public class ExpenseService {
     }
 
     // 전체 경비지출내역 조회
-    public List<Expense> findAllExpenses(){
-        return expenseRepository.findAll();
+    public List<Expense> findAllExpenses(Long userId){
+        return expenseRepository.findByUserId(userId);
     }
 
     // 선택 경비지출내역 조회
-    public Expense findSelectedExpense(Long id){
-        return expenseRepository.findById(id).get();
+    public Expense findSelectedExpense(Long expenseId, Long userId){
+        return expenseRepository.findByExpenseIdAndUserId(expenseId, userId);
     }
 
     // 선택 경비지출내역 수정
-    public List<Expense> modifyExpense(Long expense_id, ModifyExpenseRequest request){
-       Expense expense = expenseRepository.findById(expense_id).get();
+    public List<Expense> modifyExpense(Long expense_id, Long userId, ModifyExpenseRequest request){
+       Expense expense = expenseRepository.findByExpenseIdAndUserId(expense_id, userId);
+       expense.setUserId(userId);
        expense.setExpenseType(request.getExpenseType());
        expense.setExpenseMemo(request.getExpenseMemo());
        expense.setUsedAt(request.getUsedAt());
@@ -53,19 +55,18 @@ public class ExpenseService {
        expense.setUsageContent(request.getUsageContent());
 
        expenseRepository.save(expense);
-
-       return expenseRepository.findAll();
+       return expenseRepository.findByUserId(userId);
     }
 
     // 선택 경비지출내역 삭제
-    public List<Expense> deleteExpense(Long expense_id){
-        expenseRepository.deleteById(expense_id);
-        return expenseRepository.findAll();
+    public List<Expense> deleteExpense(Long expenseId, Long userId){
+        expenseRepository.deleteExpenseByExpenseIdAndUserId(expenseId, userId);
+        return expenseRepository.findByUserId(userId);
     }
 
     // 전체 경비지출내역 삭제
-    public List<Expense> deleteExpenses(){
-        expenseRepository.deleteAll();
-        return expenseRepository.findAll();
+    public List<Expense> deleteExpenses(Long userId){
+        expenseRepository.deleteExpenseByUserId(userId);
+        return expenseRepository.findByUserId(userId);
     }
 }
