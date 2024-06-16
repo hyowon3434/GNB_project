@@ -1,19 +1,22 @@
 package com.example.gnb.user.controller;
 
+import com.example.gnb.config.auth.PrincipalDetails;
 import com.example.gnb.user.dto.UserJoinRequest;
 import com.example.gnb.user.entity.User;
 import com.example.gnb.user.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 @RestController
-@RequestMapping("/user/api")
+@CrossOrigin(value = "*")
 @Slf4j
+@RequestMapping("/user/api")
 public class UserAuthController {
 
     @Autowired
@@ -21,23 +24,19 @@ public class UserAuthController {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    @PostMapping("/join")
-    public User join(@RequestBody UserJoinRequest user){
+    @PostMapping("/login")
+    public String login(Authentication authentication,
+                        @AuthenticationPrincipal PrincipalDetails userDetails){
 
-        User userEntity = User.builder()
-                .userName(user.getUserName())
-                .password(bCryptPasswordEncoder.encode(user.getPassword()))
-                .userTel(user.getUserTel())
-                .role("ROLE_USER")
-                .build();
+        log.warn("/test/login=======================");
+        PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+        log.warn("authentication : " + principalDetails.getUser());
+        log.warn("userDetails : " + userDetails.getUser());
 
-        if (userRepository.findByUserName(user.getUserName()) == null) {
-            log.warn(userEntity.toString());
-            return userRepository.save(userEntity);
-        }
-
-        return null;
+        return userDetails.getUser().toString();
     }
+
+
 
 
 }
