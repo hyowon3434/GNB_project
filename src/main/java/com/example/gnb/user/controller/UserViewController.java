@@ -1,6 +1,5 @@
 package com.example.gnb.user.controller;
 
-import com.example.gnb.config.auth.PrincipalDetails;
 import com.example.gnb.user.dto.UserJoinRequest;
 import com.example.gnb.user.entity.User;
 import com.example.gnb.user.repository.UserRepository;
@@ -10,13 +9,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.time.LocalDateTime;
 
 @Controller
 @Slf4j
-public class loginController {
+public class UserViewController {
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
