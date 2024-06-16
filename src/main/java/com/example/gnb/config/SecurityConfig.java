@@ -21,16 +21,18 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         http.csrf().disable();
         http.authorizeRequests()
+                .requestMatchers("/user/api/join").permitAll()
                 .requestMatchers("/user/api/**").authenticated()
                 .requestMatchers("/admin/api/**").access("hasRole('ROLE_ADMIN')")
                 .anyRequest().permitAll()
                 .and()
                 .formLogin()
-                .loginPage("/login")
-                .defaultSuccessUrl("/")
+                .loginPage("/loginForm")
+                .loginProcessingUrl("/login")
+                .defaultSuccessUrl("/product")
                 .and()
                 .oauth2Login()
-                .loginPage("/login")
+                .loginPage("/loginForm")
                 .userInfoEndpoint()
                 .userService(principalOauth2UserService);
 
