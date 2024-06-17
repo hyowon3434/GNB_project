@@ -16,7 +16,7 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "product_id")
-    private Long product_id;
+    private Long productId;
     @Column(nullable = false)
     @Setter
     private Long userId;
@@ -55,9 +55,10 @@ public class Product {
     private float marginRate;
 
     @Builder
-    public Product(String productName, int sellingPrice, int purchasePrice, int shippingCharge, String isVat,
+    public Product(Long productId, String productName, int sellingPrice, int purchasePrice, int shippingCharge, String isVat,
                    int salesExpenses, int extraExpenses, int platformFee, float platformFeePer, String isFreeShipping
                     , int vatInvoice, int taxServicePayment, int netProfit, float marginRate){
+        this.productId = productId;
         this.productName = productName;
         this.sellingPrice = sellingPrice;
         this.purchasePrice = purchasePrice;

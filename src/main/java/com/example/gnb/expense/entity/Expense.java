@@ -14,6 +14,7 @@ public class Expense {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
     private Long expenseId;
+    @Setter
     @Column(nullable = false)
     private Long userId;
     @Setter

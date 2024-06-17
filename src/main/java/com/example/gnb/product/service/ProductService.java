@@ -69,11 +69,11 @@ public class ProductService {
 
     // 선택 상품정보 조회
     public Product selectOneProduct(Long productId, Long userId){
-         return productRepository.findByProduct_idAndUserId(productId, userId);
+         return productRepository.findByProductIdAndUserId(productId, userId);
     }
 
     // 선택된 상품정보 수정
-    public List<Product> modifySelectedProduct(Long product_id, UpdateProductRequest request){
+    public List<Product> modifySelectedProduct(Long product_id, Long userId, UpdateProductRequest request){
         Product product = productRepository.findById(product_id).get();
         product.setProductName(request.getProduct_name());
         product.setSellingPrice(request.getSelling_price());
@@ -92,7 +92,7 @@ public class ProductService {
 
     // 선택된 상품정보 삭제
     public Product deleteSelectedProduct(Long productId, Long userId){
-       return productRepository.deleteProductByProduct_idAndUserId(productId, userId);
+       return productRepository.deleteByProductIdAndUserId(productId, userId);
 
     }
 
