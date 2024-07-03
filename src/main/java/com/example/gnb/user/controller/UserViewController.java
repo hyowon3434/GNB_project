@@ -9,7 +9,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-
 import java.time.LocalDateTime;
 
 @Controller
@@ -31,27 +30,28 @@ public class UserViewController {
     public String joinForm(){
         return "joinForm";
     }
-
-    @PostMapping("/user/api/join")
-    public String join(UserJoinRequest user) throws Exception{
-        log.warn("[USERJOINREQUEST] " + user.toString());
-        User userEntity = User.builder()
-                .userName(user.getUserName())
-                .password(bCryptPasswordEncoder.encode(user.getPassword()))
-                .userTel(user.getUserTel())
-                .role("ROLE_USER")
-                .userPlan(user.getUserPlan())
-                .planBeginAt(user.getPlanBeginAt())
-                .planFinishAt(user.getPlanFinishAt())
-                .build();
-
-        if (userRepository.findByUserName(user.getUserName()) == null) {
-            log.warn(userEntity.toString());
-            userRepository.save(userEntity);
-            return "loginForm";
-        }
-
-        return null;
-    }
+//
+//    @PostMapping("/user/api/join")
+//    public String join(UserJoinRequest user) throws Exception{
+//        log.warn("[USERJOINREQUEST] " + user.toString());
+//        User userEntity = User.builder()
+//                .email(user.getEmail())
+//                .userName(user.getUserName())
+//                .password(bCryptPasswordEncoder.encode(user.getPassword()))
+//                .userTel(user.getUserTel())
+//                .role("ROLE_USER")
+//                .userPlan(user.getUserPlan())
+//                .planBeginAt(user.getPlanBeginAt())
+//                .planFinishAt(user.getPlanFinishAt())
+//                .build();
+//
+//        if (userRepository.findByUserName(user.getUserName()) == null) {
+//            log.warn(userEntity.toString());
+//            userRepository.save(userEntity);
+//            return "loginForm";
+//        }
+//
+//        return null;
+//    }
 
 }

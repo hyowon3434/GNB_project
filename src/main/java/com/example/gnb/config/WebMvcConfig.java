@@ -36,8 +36,5 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
 
 
-    @Bean
-    public BCryptPasswordEncoder bCryptPasswordEncoder() throws Exception{
-        return new BCryptPasswordEncoder();
-    }
+
 }

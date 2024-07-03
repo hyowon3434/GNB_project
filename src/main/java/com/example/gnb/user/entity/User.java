@@ -11,8 +11,7 @@ import java.time.LocalDateTime;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "user")
-@Getter
-@ToString
+@Data
 public class User {
 
     @Id
@@ -20,13 +19,15 @@ public class User {
     @Column(nullable = false)
     private Long userId;
     @Column(nullable = false, unique = true)
-    private String userName; // email 아이디
+    private String email;
+    @Column(nullable = false)
+    private String userName;
     @Setter
     @Column(nullable = false)
     private String password;
     @Setter
     @Column(nullable = false)
-    private int userTel;
+    private String userTel;
     @Setter
     @Column(nullable = false)
     private String userPlan;
@@ -47,10 +48,11 @@ public class User {
     private Timestamp userJoinDate; // 가입날짜
 
     @Builder
-    public User( Long userId, String userName, String password, int userTel,
+    public User( Long userId,String email, String userName, String password, String userTel,
                  String userPlan, String role, String provider, String providerId,
                  String planBeginAt, String planFinishAt, Timestamp userJoinDate){
         this.userId = userId;
+        this.email = email;
         this.userName = userName;
         this.password = password;
         this.userTel = userTel;
