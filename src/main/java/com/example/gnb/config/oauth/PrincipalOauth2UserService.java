@@ -2,25 +2,106 @@ package com.example.gnb.config.oauth;
 
 import com.example.gnb.config.auth.PrincipalDetails;
 import com.example.gnb.user.entity.KakaoUser;
-import com.example.gnb.user.entity.User;
 import com.example.gnb.user.repository.KakaoUserRepository;
-import com.example.gnb.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+
 import lombok.extern.slf4j.Slf4j;
+import org.apache.coyote.Response;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.*;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
+import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestTemplate;
+
 
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
 public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
-    private final KakaoUserRepository kakaoUserRepository;
+    @Autowired
+    private KakaoUserRepository kakaoUserRepository;
+    @Value("${spring.security.oauth2.client.registration.kakao.client-id}")
+    private String client_id;
+    @Value("${spring.security.oauth2.client.registration.kakao.redirect-uri}")
+    private String redirect_uri;
+
+    public OAuth2AuthenticationToken getKakaoUser(String code){
+        OAuth2User oAuth2User = loadUserFromKakao(code);
+
+        return new OAuth2AuthenticationToken(
+                new DefaultOAuth2User(
+                        Collections.singleton(new SimpleGrantedAuthority("ROLE)USER")),
+                        oAuth2User.getAttributes(),
+                        "id"
+                ),
+                Collections.singleton(new SimpleGrantedAuthority("ROILE_USER")),
+                "id"
+        );
+    }
+
+    private OAuth2User loadUserFromKakao(String code){
+        String accessToken = getAccessTokenFromKakao(code);
+        Map<String, Object> userAttributes = getUserAttributesFromKakao(accessToken);
+
+        return new DefaultOAuth2User(
+                Collections.singleton(new SimpleGrantedAuthority("ROLE_USER")),
+                userAttributes,
+                "id"
+        );
+    }
+
+    private String getAccessTokenFromKakao(String code){
+        RestTemplate restTemplate = new RestTemplate();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+        params.add("grant_type", "authorization_code");
+        params.add("client_id", client_id);
+        params.add("redirect_uri", redirect_uri);
+        params.add("code", code);
+
+        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(params, headers);
+
+        ResponseEntity<Map> response = restTemplate.postForEntity(
+                "http://kauth.kakao.com/oauth/token",
+                request,
+                Map.class
+        );
+
+        return response.getBody().get("access_token").toString();
+    }
+
+    private Map<String, Object> getUserAttributesFromKakao(String accessToken){
+        RestTemplate restTemplate = new RestTemplate();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + accessToken);
+
+        HttpEntity<String> request = new HttpEntity<>(headers);
+
+        ResponseEntity<Map> response = restTemplate.exchange(
+                "https://kapi.kakao.com/v2/user/me",
+                HttpMethod.GET,
+                request,
+                Map.class
+        );
+        return response.getBody();
+    }
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
