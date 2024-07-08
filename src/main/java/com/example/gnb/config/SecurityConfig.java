@@ -25,7 +25,6 @@ public class SecurityConfig {
     private JwtTokenProvider tokenProvider;
     @Autowired
     private PrincipalOauth2UserService principalOauth2UserService;
-
     @Bean
     public JwtAuthenticationFilter jwtAuthenticationFilter() {
         return new JwtAuthenticationFilter(tokenProvider);
@@ -42,18 +41,19 @@ public class SecurityConfig {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .requestMatchers("/user/login", "/user/api/join", "/loginForm", "/joinForm", "/ooauth2/**").permitAll()
+                .requestMatchers("/user/login", "/user/api/join", "/loginForm", "/joinForm", "/oauth2/**").permitAll()
                 .anyRequest()
-                .authenticated()
+                .permitAll()
                 .and()
                         .oauth2Login()
-                                .userInfoEndpoint()
+                                .loginPage("/loginFrom")
+                                    .userInfoEndpoint()
                                         .userService(principalOauth2UserService)
                 .and()
-                        .defaultSuccessUrl("/callback", true)
+                        .defaultSuccessUrl("/product", true)
                 .and()
                         .logout()
-                                .logoutSuccessUrl("/loginForm")
+                                .logoutSuccessUrl("/product")
                                         .permitAll();
 
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
