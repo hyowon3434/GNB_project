@@ -6,7 +6,6 @@ import com.example.gnb.user.repository.KakaoUserRepository;
 import lombok.RequiredArgsConstructor;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
@@ -37,10 +36,18 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
     private String client_id;
     @Value("${spring.security.oauth2.client.registration.kakao.redirect-uri}")
     private String redirect_uri;
-
+    @Value("${spring.security.oauth2.client.provider.kakao.token-uri}")
+    private String token_url;
+    @Value("${spring.security.oauth2.client.provider.kakao.user-info-uri}")
+    private String user_info_url;
     public OAuth2AuthenticationToken getKakaoUser(String code){
         OAuth2User oAuth2User = loadUserFromKakao(code);
 
+        KakaoUser kakaoUser = kakaoUserRepository.findByEmail(oAuth2User.getAttribute("email"));
+
+//        if (kakaoUser == null) {
+//            joinKakaoUser(oAuth2User);
+//        }
         return new OAuth2AuthenticationToken(
                 new DefaultOAuth2User(
                         Collections.singleton(new SimpleGrantedAuthority("ROLE)USER")),
@@ -68,7 +75,7 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-
+        log.warn("redirect_uri = !!!! " + redirect_uri);
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("grant_type", "authorization_code");
         params.add("client_id", client_id);
@@ -78,7 +85,7 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(params, headers);
 
         ResponseEntity<Map> response = restTemplate.postForEntity(
-                "http://kauth.kakao.com/oauth/token",
+                token_url,
                 request,
                 Map.class
         );
@@ -95,7 +102,7 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
         HttpEntity<String> request = new HttpEntity<>(headers);
 
         ResponseEntity<Map> response = restTemplate.exchange(
-                "https://kapi.kakao.com/v2/user/me",
+                user_info_url,
                 HttpMethod.GET,
                 request,
                 Map.class
