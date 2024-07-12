@@ -74,10 +74,10 @@ public class UserAuthController {
         OAuth2AuthenticationToken token = principalOauth2UserService.getKakaoUser(code);
         log.warn("[code] : " + token);
         log.warn("[token.attributes : " + token.getPrincipal().getAttributes().get("properties"));
-        log.warn("[kakao_account] : ");
 
-        Object a = token.getPrincipal().getAttributes().get("kakao_account");
-        log.warn(" : " + a.hashCode());
+        Map<String, Object> attributes = token.getPrincipal().getAttributes();
+
+
         return ResponseEntity.ok(token);
     }
 }

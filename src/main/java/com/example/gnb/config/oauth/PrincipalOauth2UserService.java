@@ -114,7 +114,7 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         OAuth2User oAuth2User = super.loadUser(userRequest);
         String registrationId = userRequest.getClientRegistration().getRegistrationId();
-
+        log.warn("나 loadUser 호출함!!!");
         if (registrationId.equals("kakao")) {
             return joinKakaoUser(oAuth2User);
         }
@@ -126,7 +126,7 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
         Map<String, Object> attributes = oAuth2User.getAttributes();
         Map<String, Object> kakaoAccount = (Map<String, Object>) attributes.get("kakao_account");
         String email = (String) kakaoAccount.get("email");
-
+        log.warn("나 joinKakaoUser 호출함");
         KakaoUser kakaoUser = kakaoUserRepository.findByEmail(email);
 
         if (kakaoUser != null) {
