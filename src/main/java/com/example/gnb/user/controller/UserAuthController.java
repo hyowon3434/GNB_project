@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 import java.util.Map;
+import java.util.Properties;
 
 @RestController
 @Slf4j
@@ -72,11 +73,6 @@ public class UserAuthController {
     @GetMapping("/callback")
     public ResponseEntity<?> successKakao(@RequestParam("code") String code){
         OAuth2AuthenticationToken token = principalOauth2UserService.getKakaoUser(code);
-        log.warn("[code] : " + token);
-        log.warn("[token.attributes : " + token.getPrincipal().getAttributes().get("properties"));
-
-        Map<String, Object> attributes = token.getPrincipal().getAttributes();
-
 
         return ResponseEntity.ok(token);
     }

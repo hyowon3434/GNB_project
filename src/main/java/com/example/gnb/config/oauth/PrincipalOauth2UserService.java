@@ -42,12 +42,13 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
     private String user_info_url;
     public OAuth2AuthenticationToken getKakaoUser(String code){
         OAuth2User oAuth2User = loadUserFromKakao(code);
-
+        log.warn("getKakaoUser -> oAuth2User : " +oAuth2User.toString());
         KakaoUser kakaoUser = kakaoUserRepository.findByEmail(oAuth2User.getAttribute("email"));
 
-//        if (kakaoUser == null) {
-//            joinKakaoUser(oAuth2User);
-//        }
+        if (kakaoUser != null) {
+            joinKakaoUser(oAuth2User);
+        }
+
         return new OAuth2AuthenticationToken(
                 new DefaultOAuth2User(
                         Collections.singleton(new SimpleGrantedAuthority("ROLE)USER")),
@@ -62,7 +63,7 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
     private OAuth2User loadUserFromKakao(String code){
         String accessToken = getAccessTokenFromKakao(code);
         Map<String, Object> userAttributes = getUserAttributesFromKakao(accessToken);
-
+        log.warn("userAttributes : " + userAttributes.toString());
         return new DefaultOAuth2User(
                 Collections.singleton(new SimpleGrantedAuthority("ROLE_USER")),
                 userAttributes,
@@ -127,15 +128,17 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
         Map<String, Object> kakaoAccount = (Map<String, Object>) attributes.get("kakao_account");
         String email = (String) kakaoAccount.get("email");
         log.warn("나 joinKakaoUser 호출함");
+        log.warn("email : " + email.toString());
         KakaoUser kakaoUser = kakaoUserRepository.findByEmail(email);
 
         if (kakaoUser != null) {
             log.error("이미 존재하는 회원입니다.");
         }
+        Map<String, Object> properties = (Map<String, Object>) attributes.get("properties");
 
         KakaoUser newMember = KakaoUser.builder()
                 .email(kakaoAccount.get("email").toString())
-                .nickname(kakaoAccount.get("nickname").toString())
+                .nickname(properties.get("nickname").toString())
                 .userPlan("STARTER")
                 .role("ROLE_USER")
                 .planBeginAt(LocalDate.now().toString())
