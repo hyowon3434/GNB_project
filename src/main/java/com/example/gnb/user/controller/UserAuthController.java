@@ -2,12 +2,13 @@ package com.example.gnb.user.controller;
 
 import com.example.gnb.config.auth.PrincipalDetailsService;
 import com.example.gnb.config.jwt.JwtTokenProvider;
+import com.example.gnb.config.oauth.PrincipalOauth2UserService;
 import com.example.gnb.user.dto.UserLoginRequest;
 import com.example.gnb.user.dto.UserJoinRequest;
 import com.example.gnb.user.dto.JwtAuthenticationResponse;
 import com.example.gnb.user.entity.User;
 import com.example.gnb.user.service.UserService;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -15,9 +16,14 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
+import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Collections;
+import java.util.Map;
+import java.util.Properties;
 
 @RestController
 @Slf4j
@@ -26,16 +32,16 @@ public class UserAuthController {
 
     private final AuthenticationManager authenticationManager;
     private final JwtTokenProvider tokenProvider;
+    private final PrincipalOauth2UserService principalOauth2UserService;
     private final UserService userService;
-    private final BCryptPasswordEncoder encoder;
     private final PrincipalDetailsService service;
 
     @PostMapping("/user/login")
     public ResponseEntity<?> login(@RequestBody UserLoginRequest loginRequest) throws Exception{
-        log.warn("are u here??? : " + loginRequest.getEmail());
-        String dbPw = service.loadUserByUsername(loginRequest.getEmail()).getPassword().toString();
-        String rawPw = loginRequest.getPassword();
-        log.warn("로그인 pw : " + rawPw+ "     "+ dbPw);
+//        log.warn("are u here??? : " + loginRequest.getEmail());
+//        String dbPw = service.loadUserByUsername(loginRequest.getEmail()).getPassword().toString();
+//        String rawPw = loginRequest.getPassword();
+//        log.warn("로그인 pw : " + rawPw+ "     "+ dbPw);
         String jwt = "";
         try{
             Authentication authentication = authenticationManager.authenticate(
@@ -62,5 +68,12 @@ public class UserAuthController {
     public ResponseEntity<?> registerUser(@RequestBody UserJoinRequest joinRequest) {
         User user = userService.registerUser(joinRequest);
         return ResponseEntity.ok("User registered successfully");
+    }
+
+    @GetMapping("/callback")
+    public ResponseEntity<?> successKakao(@RequestParam("code") String code){
+        OAuth2AuthenticationToken token = principalOauth2UserService.getKakaoUser(code);
+
+        return ResponseEntity.ok(token);
     }
 }
