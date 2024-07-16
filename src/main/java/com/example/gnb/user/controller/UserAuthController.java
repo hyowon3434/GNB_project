@@ -17,13 +17,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
-import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
-import org.springframework.security.oauth2.core.OAuth2AccessToken;
-import org.springframework.web.bind.annotation.*;
 
-import java.util.Collections;
-import java.util.Map;
-import java.util.Properties;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @Slf4j
@@ -38,10 +33,7 @@ public class UserAuthController {
 
     @PostMapping("/user/login")
     public ResponseEntity<?> login(@RequestBody UserLoginRequest loginRequest) throws Exception{
-//        log.warn("are u here??? : " + loginRequest.getEmail());
-//        String dbPw = service.loadUserByUsername(loginRequest.getEmail()).getPassword().toString();
-//        String rawPw = loginRequest.getPassword();
-//        log.warn("로그인 pw : " + rawPw+ "     "+ dbPw);
+
         String jwt = "";
         try{
             Authentication authentication = authenticationManager.authenticate(
@@ -73,7 +65,7 @@ public class UserAuthController {
     @GetMapping("/callback")
     public ResponseEntity<?> successKakao(@RequestParam("code") String code){
         OAuth2AuthenticationToken token = principalOauth2UserService.getKakaoUser(code);
-
+        
         return ResponseEntity.ok(token);
     }
 }

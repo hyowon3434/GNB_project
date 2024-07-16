@@ -49,6 +49,7 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
             joinKakaoUser(oAuth2User);
         }
 
+
         return new OAuth2AuthenticationToken(
                 new DefaultOAuth2User(
                         Collections.singleton(new SimpleGrantedAuthority("ROLE)USER")),
