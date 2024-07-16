@@ -12,5 +12,5 @@ public class SubscriptionDTO {
     private BigDecimal price;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
-    private Boolean autoRenewal;
+    private boolean autoRenewal;
 }

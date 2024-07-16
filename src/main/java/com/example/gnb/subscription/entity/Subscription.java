@@ -32,14 +32,14 @@ public class Subscription {
     @Column(nullable = false)
     private LocalDateTime endDate;
     @Column(nullable = false)
-    private Boolean autoRenewal;
+    private boolean autoRenewal;
     @CreationTimestamp
     private LocalDateTime createdAt;
 
     @Builder
     public Subscription(User user, String planType,
                         BigDecimal price, LocalDateTime startDate,
-                        LocalDateTime endDate, Boolean autoRenewal) {
+                        LocalDateTime endDate, boolean autoRenewal) {
         this.user = user;
         this.planType = planType;
         this.price = price;

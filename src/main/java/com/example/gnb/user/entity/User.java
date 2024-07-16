@@ -39,10 +39,10 @@ public class User {
     private String providerId;
     @Setter
     @Column(nullable = false)
-    private String planBeginAt;
+    private LocalDateTime planBeginAt;
     @Setter
     @Column(nullable = false)
-    private String planFinishAt;
+    private LocalDateTime planFinishAt;
     @Column(nullable = false)
     @CreationTimestamp
     private Timestamp userJoinDate; // 가입날짜
@@ -53,7 +53,7 @@ public class User {
     @Builder
     public User( Long userId,String email, String userName, String password, String userTel,
                  String userPlan, String role, String provider, String providerId,
-                 String planBeginAt, String planFinishAt, Timestamp userJoinDate, Boolean autoRenewal){
+                 LocalDateTime planBeginAt, LocalDateTime planFinishAt, Timestamp userJoinDate, Boolean autoRenewal){
         this.userId = userId;
         this.email = email;
         this.userName = userName;
