@@ -46,11 +46,14 @@ public class User {
     @Column(nullable = false)
     @CreationTimestamp
     private Timestamp userJoinDate; // 가입날짜
+    @Setter
+    @Column(nullable = false)
+    private Boolean autoRenewal;
 
     @Builder
     public User( Long userId,String email, String userName, String password, String userTel,
                  String userPlan, String role, String provider, String providerId,
-                 String planBeginAt, String planFinishAt, Timestamp userJoinDate){
+                 String planBeginAt, String planFinishAt, Timestamp userJoinDate, Boolean autoRenewal){
         this.userId = userId;
         this.email = email;
         this.userName = userName;
@@ -63,6 +66,7 @@ public class User {
         this.planBeginAt = planBeginAt;
         this.planFinishAt = planFinishAt;
         this.userJoinDate = userJoinDate;
+        this.autoRenewal = autoRenewal;
 
     }
 }
