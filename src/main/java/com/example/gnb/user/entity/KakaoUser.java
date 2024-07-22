@@ -36,11 +36,14 @@ public class KakaoUser {
     @Column(nullable = false)
     @CreationTimestamp
     private Timestamp userJoinDate;
+    @Column
+    private String billingKey;
 
     @Builder
     public KakaoUser(Long kakaoUserId, String email, String nickname,
                      String userTel, String userPlan, String role,
-                     String planBeginAt, String planFinishAt, Timestamp userJoinDate){
+                     String planBeginAt, String planFinishAt,
+                     Timestamp userJoinDate, String billingKey){
         this.kakaoUserId = kakaoUserId;
         this.nickname = nickname;
         this.email = email;
@@ -50,6 +53,7 @@ public class KakaoUser {
         this.planBeginAt = planBeginAt;
         this.planFinishAt = planFinishAt;
         this.userJoinDate = userJoinDate;
+        this.billingKey = billingKey;
     }
 
 }
