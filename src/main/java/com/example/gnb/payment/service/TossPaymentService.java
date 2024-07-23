@@ -1,6 +1,7 @@
 package com.example.gnb.payment.service;
 
 import com.example.gnb.subscription.entity.Subscription;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -18,7 +19,8 @@ public class TossPaymentService {
 
     private final String TOSS_API_URL = "https//api.tosspayments.com/v1";
 
-    private final RestTemplate restTemplate;
+    @Autowired
+    private RestTemplate restTemplate;
 
     public TossPaymentService(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
