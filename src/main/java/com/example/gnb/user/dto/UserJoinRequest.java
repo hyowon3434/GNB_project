@@ -3,6 +3,7 @@ package com.example.gnb.user.dto;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 public class UserJoinRequest {
@@ -12,6 +13,6 @@ public class UserJoinRequest {
     private String userTel;
     private String userPlan = "STARTER";
     private String role = "ROLE_USER";
-    private String planBeginAt = LocalDate.now().toString();
-    private String planFinishAt = "9999-12-31";
+    private LocalDateTime planBeginAt = LocalDateTime.now();
+    private LocalDateTime planFinishAt = planBeginAt.plusYears(5000);
 }
