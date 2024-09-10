@@ -16,7 +16,7 @@ public class Expense {
     private Long expenseId;
     @Setter
     @Column(nullable = false)
-    private Long userId;
+    private String userEmail;
     @Setter
     @Column(nullable = false)
     private String expenseType;
@@ -33,10 +33,10 @@ public class Expense {
     private String expenseMemo;
 
     @Builder
-    public Expense(Long expenseId, Long userId, String expenseType, String usage_content,
+    public Expense(Long expenseId, String userEmail, String expenseType, String usage_content,
                    Timestamp usedAt, Long usagePrice, String expenseMemo){
         this.expenseId = expenseId;
-        this.userId = userId;
+        this.userEmail = userEmail;
         this.expenseType = expenseType;
         this.usageContent = usage_content;
         this.usedAt = usedAt;

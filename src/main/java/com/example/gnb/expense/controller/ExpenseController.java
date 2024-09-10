@@ -19,45 +19,41 @@ public class ExpenseController {
     private final ExpenseService expenseService;
 
     // 경비지출 등록 기능
-    @PostMapping("/{userId}")
-    public Expense registerExpense(@RequestBody RegisterExpenseRequest registerExpenseRequest,
-                                   @PathVariable("userId") Long userId){
-        Expense registeredExpense = expenseService.createExpense(registerExpenseRequest, userId);
+    @PostMapping
+    public Expense registerExpense(@RequestBody RegisterExpenseRequest registerExpenseRequest){
+        Expense registeredExpense = expenseService.createExpense(registerExpenseRequest);
         return registeredExpense;
     }
 
     // 전체 경비지출내역 조회 기능
-    @GetMapping("/{userId}")
-    public List<Expense> getAllExpenses(@PathVariable("userId") Long userId){
-        return expenseService.findAllExpenses(userId);
+    @GetMapping
+    public List<Expense> getAllExpenses(){
+        return expenseService.findAllExpenses();
     }
 
     // 선택 경비지출내역 조회
-    @GetMapping("/{expenseId}/{userId}")
-    public Expense getSelectedExepnse(@PathVariable("expenseId") Long expenseId,
-                                      @PathVariable("userId") Long userId){
-        return expenseService.findSelectedExpense(expenseId, userId);
+    @GetMapping("/select")
+    public Expense getSelectedExepnse(@RequestParam("expenseId") Long expenseId){
+        return expenseService.findSelectedExpense(expenseId);
     }
 
     // 선택 경비지출내역 수정
-    @PutMapping("/{expenseId}/{userId}")
-    public List<Expense> modifySelectedExpense(@PathVariable("expenseId") Long expenseId,
-                                               @PathVariable("userId") Long userId,
+    @PutMapping("/select")
+    public List<Expense> modifySelectedExpense(@RequestParam("expenseId") Long expenseId,
                                                @RequestBody ModifyExpenseRequest request){
-        return expenseService.modifyExpense(expenseId,userId, request);
+        return expenseService.modifyExpense(expenseId, request);
     }
 
     // 선택 경비지출내역 삭제
-    @DeleteMapping("/{expenseId}/{userId}")
-    public List<Expense> deleteSelectedExpense(@PathVariable("expenseId") Long expenseId,
-                                               @PathVariable("userId") Long userId){
-        return expenseService.deleteExpense(expenseId, userId);
+    @DeleteMapping("/select")
+    public List<Expense> deleteSelectedExpense(@RequestParam("expenseId") Long expenseId){
+        return expenseService.deleteExpense(expenseId);
     }
 
     // 전체 경비지출내역 삭제
-    @DeleteMapping("/{userId}")
-    public List<Expense> deletAllExpenses(@PathVariable("userId") Long userId){
-        return expenseService.deleteExpenses(userId);
+    @DeleteMapping
+    public List<Expense> deletAllExpenses(){
+        return expenseService.deleteExpenses();
     }
 
 }
