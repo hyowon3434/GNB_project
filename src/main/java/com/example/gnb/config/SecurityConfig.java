@@ -16,6 +16,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 
 @Configuration
 @EnableWebSecurity
@@ -38,7 +39,7 @@ public class SecurityConfig {
                 .csrf()
                 .disable()
                 .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
                 .and()
                 .authorizeRequests()
                 .requestMatchers("/user/login", "/user/api/join", "/loginForm", "/joinForm", "/oauth2/**").permitAll()
@@ -56,6 +57,9 @@ public class SecurityConfig {
                                 .logoutSuccessUrl("/product")
                                         .permitAll();
 
+        http
+                .securityContext()
+                .securityContextRepository(new HttpSessionSecurityContextRepository());
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
