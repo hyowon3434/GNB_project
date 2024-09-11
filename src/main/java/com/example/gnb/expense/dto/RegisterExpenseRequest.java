@@ -11,5 +11,5 @@ public class RegisterExpenseRequest {
     private String usageContent;
     private Long usagePrice;
     private String expenseMemo;
-    private Timestamp usedAt;
+    private String usedAt;
 }

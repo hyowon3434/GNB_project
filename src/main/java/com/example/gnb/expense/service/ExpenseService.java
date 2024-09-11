@@ -4,7 +4,9 @@ import com.example.gnb.expense.dto.ModifyExpenseRequest;
 import com.example.gnb.expense.dto.RegisterExpenseRequest;
 import com.example.gnb.expense.entity.Expense;
 import com.example.gnb.expense.repository.ExpenseRepository;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,12 +19,13 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 @Transactional
+@Slf4j
 public class ExpenseService {
     private final ExpenseRepository expenseRepository;
 
     // 경비지출내역 등록
-    public Expense createExpense(RegisterExpenseRequest request){
-        String userEmail = getLoggedUserEmail();
+    public Expense createExpense(RegisterExpenseRequest request, String userEmail){
+        //String userEmail = getLoggedUserEmail();
 
         Expense expense = Expense.builder()
                         .userEmail(userEmail)
@@ -84,6 +87,7 @@ public class ExpenseService {
         if (authentication == null) {
             return null;
         }
+        log.warn("현재 로그인한 사용자 email : " + authentication.getPrincipal());
         return authentication.getName();
     }
 }

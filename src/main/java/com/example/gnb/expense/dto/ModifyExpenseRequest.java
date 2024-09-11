@@ -9,7 +9,7 @@ public class ModifyExpenseRequest {
 
     private String expenseType;
     private String usageContent;
-    private Timestamp usedAt;
+    private String usedAt;
     private Long usagePrice;
     private String expenseMemo;
 }
