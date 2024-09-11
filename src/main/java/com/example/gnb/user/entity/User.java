@@ -3,7 +3,6 @@ package com.example.gnb.user.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.data.annotation.CreatedDate;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -49,11 +48,14 @@ public class User {
     @Setter
     @Column(nullable = false)
     private Boolean autoRenewal;
+    @Column
+    private String billingKey;
 
     @Builder
     public User( Long userId,String email, String userName, String password, String userTel,
                  String userPlan, String role, String provider, String providerId,
-                 LocalDateTime planBeginAt, LocalDateTime planFinishAt, Timestamp userJoinDate, Boolean autoRenewal){
+                 LocalDateTime planBeginAt, LocalDateTime planFinishAt, Timestamp userJoinDate,
+                 Boolean autoRenewal, String billingKey){
         this.userId = userId;
         this.email = email;
         this.userName = userName;
@@ -67,6 +69,7 @@ public class User {
         this.planFinishAt = planFinishAt;
         this.userJoinDate = userJoinDate;
         this.autoRenewal = autoRenewal;
+        this.billingKey = billingKey;
 
     }
 }

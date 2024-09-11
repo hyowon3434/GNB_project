@@ -12,31 +12,32 @@ public class Expense {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false)
+    @Column(nullable = false, name = "expenseId")
     private Long expenseId;
     @Setter
-    @Column(nullable = false)
-    private Long userId;
+    @Column(nullable = false, name = "userEmail")
+    private String userEmail;
     @Setter
-    @Column(nullable = false)
+    @Column(nullable = false, name = "expenseType")
     private String expenseType;
     @Setter
-    @Column(nullable = false)
+    @Column(nullable = true, name = "usageContent")
     private String usageContent;
     @Setter
-    private Timestamp usedAt;
+    @Column(nullable = true, name = "usedAt")
+    private String usedAt;
     @Setter
-    @Column(nullable = false)
+    @Column(nullable = false, name = "usagePrice")
     private Long usagePrice;
     @Setter
-    @Column(nullable = false)
+    @Column(nullable = true, name = "expenseMemo")
     private String expenseMemo;
 
     @Builder
-    public Expense(Long expenseId, Long userId, String expenseType, String usage_content,
-                   Timestamp usedAt, Long usagePrice, String expenseMemo){
+    public Expense(Long expenseId, String userEmail, String expenseType, String usage_content,
+                   String usedAt, Long usagePrice, String expenseMemo){
         this.expenseId = expenseId;
-        this.userId = userId;
+        this.userEmail = userEmail;
         this.expenseType = expenseType;
         this.usageContent = usage_content;
         this.usedAt = usedAt;
