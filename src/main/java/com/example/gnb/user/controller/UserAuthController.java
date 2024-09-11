@@ -7,7 +7,9 @@ import com.example.gnb.user.dto.UserLoginRequest;
 import com.example.gnb.user.dto.UserJoinRequest;
 import com.example.gnb.user.dto.JwtAuthenticationResponse;
 import com.example.gnb.user.entity.User;
+import com.example.gnb.user.repository.UserRepository;
 import com.example.gnb.user.service.UserService;
+import jakarta.servlet.http.HttpSession;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,6 +18,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 
 import org.springframework.web.bind.annotation.*;
@@ -29,11 +32,10 @@ public class UserAuthController {
     private final JwtTokenProvider tokenProvider;
     private final PrincipalOauth2UserService principalOauth2UserService;
     private final UserService userService;
-    private final PrincipalDetailsService service;
-
+    private final UserRepository userRepository;
     @PostMapping("/user/login")
-    public ResponseEntity<?> login(@RequestBody UserLoginRequest loginRequest) throws Exception{
-
+    public ResponseEntity<?> login(@RequestBody UserLoginRequest loginRequest, HttpSession session) throws Exception{
+        log.warn(loginRequest.toString());
         String jwt = "";
         try{
             Authentication authentication = authenticationManager.authenticate(
@@ -42,11 +44,12 @@ public class UserAuthController {
                             loginRequest.getPassword()
                     )
             );
-            log.warn("authentication : [" + authentication.getPrincipal().toString() + "]");
             SecurityContextHolder.getContext().setAuthentication(authentication);
+            User user = userRepository.findByEmail(loginRequest.getEmail());
+            log.warn("현재 로그인한 유저정보" + user.toString());
+            session.setAttribute("user", user);
 
             jwt = tokenProvider.generateToken(authentication);
-            log.warn("토큰 생성 완료 [" + jwt + "]");
         }catch (Exception e){
             log.error("Authentication failed", e);
             throw new Exception("not authenticated.......");

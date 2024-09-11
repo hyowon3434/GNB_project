@@ -30,6 +30,7 @@ public class UserService {
                 .role(joinRequest.getRole())
                 .planBeginAt(joinRequest.getPlanBeginAt())
                 .planFinishAt(joinRequest.getPlanFinishAt())
+                .autoRenewal(true)
                 .build();
 
         return userRepository.save(user);
