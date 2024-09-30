@@ -2,6 +2,7 @@ package com.example.gnb.payment.service;
 
 import com.example.gnb.subscription.entity.Subscription;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -15,9 +16,11 @@ import java.util.Objects;
 @Service
 public class TossPaymentService {
 
+    @Value("${toss.payment.secret-key}")
     private String tossSecretKey;
 
-    private final String TOSS_API_URL = "https//api.tosspayments.com/v1";
+    @Value("${toss.payment.toss-api-url}")
+    private String TOSS_API_URL;
 
     @Autowired
     private RestTemplate restTemplate;
