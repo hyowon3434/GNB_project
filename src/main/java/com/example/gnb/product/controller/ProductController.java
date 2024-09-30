@@ -55,7 +55,7 @@ public class ProductController {
     }
 
     // 전체 상품정보 삭제
-    @DeleteMapping("/{userId}")
+    @DeleteMapping("/one")
     public void deleteAllProduct(HttpSession session ){
         productService.deleteAllProduct(getCurrentUserEmail(session));
     }
