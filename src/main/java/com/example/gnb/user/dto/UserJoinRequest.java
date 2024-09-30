@@ -14,5 +14,5 @@ public class UserJoinRequest {
     private String userPlan = "STARTER";
     private String role = "ROLE_USER";
     private LocalDateTime planBeginAt = LocalDateTime.now();
-    private LocalDateTime planFinishAt = planBeginAt.plusYears(5000);
+    private LocalDateTime planFinishAt = planBeginAt.plusYears(9999);
 }

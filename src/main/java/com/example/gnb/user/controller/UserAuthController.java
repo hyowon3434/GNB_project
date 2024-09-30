@@ -33,7 +33,7 @@ public class UserAuthController {
     private final PrincipalOauth2UserService principalOauth2UserService;
     private final UserService userService;
     private final UserRepository userRepository;
-    @PostMapping("/user/login")
+    @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody UserLoginRequest loginRequest, HttpSession session) throws Exception{
         log.warn(loginRequest.toString());
         String jwt = "";
@@ -59,7 +59,7 @@ public class UserAuthController {
         return ResponseEntity.ok(new JwtAuthenticationResponse(jwt));
     }
 
-    @PostMapping("/user/api/join")
+    @PostMapping("/join")
     public ResponseEntity<?> registerUser(@RequestBody UserJoinRequest joinRequest) {
         User user = userService.registerUser(joinRequest);
         return ResponseEntity.ok("User registered successfully");
