@@ -25,7 +25,7 @@ public class ExpenseService {
     private final ExpenseRepository expenseRepository;
     // 경비지출내역 등록
     public Expense createExpense(RegisterExpenseRequest request, String userEmail){
-        if (userEmail == null && userEmail.equals("anonymousUser")) throw new NullPointerException("세션에 유저정보가 없습니다.");
+        if (userEmail == null || userEmail.equals("anonymousUser")) throw new NullPointerException("세션에 유저정보가 없습니다.");
 
         Expense expense = Expense.builder()
                         .userEmail(userEmail)
@@ -33,8 +33,8 @@ public class ExpenseService {
                         .expenseType(request.getExpenseType())
                         .usage_content(request.getUsageContent())
                         .usagePrice(request.getUsagePrice())
+                        .usedAt(request.getUsedAt())
                         .build();
-
 
         Expense saved = expenseRepository.save(expense);
 
@@ -43,7 +43,6 @@ public class ExpenseService {
 
     // 전체 경비지출내역 조회
     public List<Expense> findAllExpenses(String userEmail){
-
         return expenseRepository.findByUserEmail(userEmail);
     }
 

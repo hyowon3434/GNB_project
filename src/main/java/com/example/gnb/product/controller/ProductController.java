@@ -4,6 +4,8 @@ import com.example.gnb.product.dto.CreateProductRequest;
 import com.example.gnb.product.dto.UpdateProductRequest;
 import com.example.gnb.product.entity.Product;
 import com.example.gnb.product.service.ProductService;
+import com.example.gnb.user.entity.User;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,43 +20,51 @@ public class ProductController {
     private final ProductService productService;
 
     // 상품정보 등록
-    @PostMapping("/{userId}")
+    @PostMapping
     public Product createProduct(@RequestBody CreateProductRequest request,
-                                 @PathVariable("userId") Long userId){
-        return productService.createProduct(request, userId);
+                                 HttpSession session){
+        return productService.createProduct(request, getCurrentUserEmail(session));
     }
 
     // 전체 상품정보 조회
-    @GetMapping("/{userId}")
-    public List<Product> selectAllProduct(@PathVariable("userId") Long userId){
-        return productService.selectAllProduct(userId);
+    @GetMapping
+    public List<Product> selectAllProduct(HttpSession session){
+        return productService.selectAllProduct(getCurrentUserEmail(session));
     }
 
     // 선택된 상품정보 조회
-    @GetMapping("/{productId}/{userId}")
-    public Product selectOneProduct(@PathVariable("productId") Long productId,
-                                    @PathVariable("userId") Long userId){
-        return productService.selectOneProduct(productId, userId);
+    @GetMapping("/get")
+    public Product selectOneProduct(@RequestParam("productId") Long productId,
+                                    HttpSession session){
+        return productService.selectOneProduct(productId, getCurrentUserEmail(session));
     }
 
     // 선택된 상품정보 수정
-    @PutMapping("/{productId}/{userId}")
-    public List<Product> modifySelectedProduct(@PathVariable("productId") Long productId,
-                                               @PathVariable("userId") Long userId,
-                                               @RequestBody UpdateProductRequest request){
-        return productService.modifySelectedProduct(productId, userId, request);
+    @PutMapping
+    public List<Product> modifySelectedProduct(@RequestParam("productId") Long productId,
+                                               @RequestBody UpdateProductRequest request,
+                                               HttpSession session){
+        return productService.modifySelectedProduct(productId, getCurrentUserEmail(session), request);
     }
 
     // 선택된 상품정보 삭제
-    @DeleteMapping("/{productId}/{userId}")
-    public Product deleteSelectedProduct(@PathVariable("productId") Long productId,
-                                         @PathVariable("userId") Long userId){
-        return productService.deleteSelectedProduct(productId, userId);
+    @DeleteMapping
+    public Product deleteSelectedProduct(@RequestParam("productId") Long productId,
+                                         HttpSession session){
+        return productService.deleteSelectedProduct(productId, getCurrentUserEmail(session));
     }
 
     // 전체 상품정보 삭제
-    @DeleteMapping("/{userId}")
-    public void deleteAllProduct(@PathVariable("userId") Long userId){
-        productService.deleteAllProduct(userId);
+    @DeleteMapping("/one")
+    public void deleteAllProduct(HttpSession session ){
+        productService.deleteAllProduct(getCurrentUserEmail(session));
+    }
+
+    private String getCurrentUserEmail(HttpSession session){
+        User currentUser = (User)session.getAttribute("user");
+        if (currentUser == null) {
+            throw new NullPointerException("현재 유저 정보가 없습니다");
+        }
+        return currentUser.getEmail();
     }
 }
