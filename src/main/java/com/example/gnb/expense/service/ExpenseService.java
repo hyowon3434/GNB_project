@@ -33,6 +33,7 @@ public class ExpenseService {
                         .expenseType(request.getExpenseType())
                         .usage_content(request.getUsageContent())
                         .usagePrice(request.getUsagePrice())
+                        .usedAt(request.getUsedAt())
                         .build();
 
         Expense saved = expenseRepository.save(expense);

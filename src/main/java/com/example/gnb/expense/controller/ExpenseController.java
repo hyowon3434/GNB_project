@@ -31,6 +31,7 @@ public class ExpenseController {
     @PostMapping
     public ResponseEntity<?> registerExpense(@RequestBody RegisterExpenseRequest registerExpenseRequest, HttpSession session){
         Expense registeredExpense = expenseService.createExpense(registerExpenseRequest, getCurrentUserEmail(session));
+        log.warn(registeredExpense.getUsedAt().toString());
         return ResponseEntity.ok(registeredExpense);
     }
 
@@ -56,7 +57,7 @@ public class ExpenseController {
     }
 
     // 선택 경비지출내역 삭제
-    @DeleteMapping
+    @DeleteMapping("/one")
     public ResponseEntity<?> deleteSelectedExpense(@RequestParam("expenseId") Long expenseId, HttpSession session){
         return ResponseEntity.ok(expenseService.deleteExpense(expenseId, getCurrentUserEmail(session)));
     }

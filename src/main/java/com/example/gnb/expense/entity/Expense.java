@@ -1,8 +1,12 @@
 package com.example.gnb.expense.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -25,7 +29,8 @@ public class Expense {
     private String usageContent;
     @Setter
     @Column(nullable = true, name = "usedAt")
-    private String usedAt;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime usedAt;
     @Setter
     @Column(nullable = false, name = "usagePrice")
     private Long usagePrice;
@@ -35,7 +40,7 @@ public class Expense {
 
     @Builder
     public Expense(Long expenseId, String userEmail, String expenseType, String usage_content,
-                   String usedAt, Long usagePrice, String expenseMemo){
+                   LocalDateTime usedAt, Long usagePrice, String expenseMemo){
         this.expenseId = expenseId;
         this.userEmail = userEmail;
         this.expenseType = expenseType;
