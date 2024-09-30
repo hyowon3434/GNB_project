@@ -23,21 +23,21 @@ public class Product {
     @Setter
     private String productName;
     @Setter
-    private int sellingPrice;
+    private Integer sellingPrice;
     @Setter
-    private int purchasePrice;
+    private Integer purchasePrice;
     @Setter
-    private int shippingCharge;
+    private Integer shippingCharge;
     @Setter
     private String isVat;
     @Setter
-    private int salesExpenses;
+    private Integer salesExpenses;
     @Setter
-    private int extraExpenses;
+    private Integer extraExpenses;
     @Setter
-    private int platformFee;
+    private Integer platformFee;
     @Setter
-    private float platformFeePer;
+    private Float platformFeePer;
     @Setter
     private String isFreeShipping;
     @CreationTimestamp // insert 쿼리문이 발생했을때, 현재시간 값을 적용
@@ -46,20 +46,20 @@ public class Product {
     private Timestamp updatedAt;
     @Setter
     @Column
-    private int vatInvoice;
+    private Integer vatInvoice;
     @Setter
-    private int taxServicePayment;
+    private Integer taxServicePayment;
     @Setter
-    private int netProfit;
+    private Integer netProfit;
     @Setter
-    private float marginRate;
+    private Float marginRate;
 
     @Builder
-    public Product(Long productId, String productName, int sellingPrice,
-                   int purchasePrice, int shippingCharge, String isVat,
-                   int salesExpenses, int extraExpenses, int platformFee,
-                   float platformFeePer, String isFreeShipping, int vatInvoice,
-                   int taxServicePayment, int netProfit, float marginRate,
+    public Product(Long productId, String productName, Integer sellingPrice,
+                   Integer purchasePrice, Integer shippingCharge, String isVat,
+                   Integer salesExpenses, Integer extraExpenses, Integer platformFee,
+                   Float platformFeePer, String isFreeShipping, Integer vatInvoice,
+                   Integer taxServicePayment, Integer netProfit, Float marginRate,
                    String userEmail){
         this.productId = productId;
         this.productName = productName;
