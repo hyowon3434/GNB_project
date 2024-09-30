@@ -19,7 +19,7 @@ public class Product {
     private Long productId;
     @Column(nullable = false)
     @Setter
-    private Long userId;
+    private String userEmail;
     @Setter
     private String productName;
     @Setter
@@ -55,9 +55,12 @@ public class Product {
     private float marginRate;
 
     @Builder
-    public Product(Long productId, String productName, int sellingPrice, int purchasePrice, int shippingCharge, String isVat,
-                   int salesExpenses, int extraExpenses, int platformFee, float platformFeePer, String isFreeShipping
-                    , int vatInvoice, int taxServicePayment, int netProfit, float marginRate){
+    public Product(Long productId, String productName, int sellingPrice,
+                   int purchasePrice, int shippingCharge, String isVat,
+                   int salesExpenses, int extraExpenses, int platformFee,
+                   float platformFeePer, String isFreeShipping, int vatInvoice,
+                   int taxServicePayment, int netProfit, float marginRate,
+                   String userEmail){
         this.productId = productId;
         this.productName = productName;
         this.sellingPrice = sellingPrice;
@@ -73,7 +76,7 @@ public class Product {
         this.taxServicePayment = taxServicePayment;
         this.netProfit = netProfit;
         this.marginRate = marginRate;
-
+        this.userEmail = userEmail;
     }
 
 }

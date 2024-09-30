@@ -19,11 +19,15 @@ public class ProductService {
     private final ProductRepository productRepository;
 
     // 상품정보 등록
-    public Product createProduct(CreateProductRequest request, Long userId){
+    public Product createProduct(CreateProductRequest request, String userEmail){
         int vat_invoice, tax_service_payment;
         float net_profit;
         float margin_rate;
         int expenses;
+
+        if (userEmail == null || userEmail.equals("annonymousUser")) {
+            throw new NullPointerException("세션에 유저정보가 없습니다.");
+        }
 
         // 세금계산서 발급  = 상품 매입가의 10%
         vat_invoice = (int) (request.getPurchase_price() * 0.1);
@@ -40,6 +44,7 @@ public class ProductService {
         margin_rate =  (net_profit / request.getSelling_price()) * 100;
 
         Product product = Product.builder()
+                        .userEmail(userEmail)
                         .productName(request.getProduct_name())
                         .sellingPrice(request.getSelling_price())
                         .purchasePrice(request.getPurchase_price())
@@ -62,18 +67,21 @@ public class ProductService {
     }
 
     // 전체 상품정보 조회
-    public List<Product> selectAllProduct(Long userId){
-        List<Product> selectProductResponses = productRepository.findByUserId(userId);
+    public List<Product> selectAllProduct(String userEmail){
+        if (userEmail == null || userEmail.equals("annonymousUser")) {
+            throw new NullPointerException("세션에 유저정보가 없습니다.");
+        }
+        List<Product> selectProductResponses = productRepository.findByUserEmail(userEmail);
         return selectProductResponses;
     }
 
     // 선택 상품정보 조회
-    public Product selectOneProduct(Long productId, Long userId){
-         return productRepository.findByProductIdAndUserId(productId, userId);
+    public Product selectOneProduct(Long productId, String userEmail){
+         return productRepository.findByProductIdAndUserEmail(productId, userEmail);
     }
 
     // 선택된 상품정보 수정
-    public List<Product> modifySelectedProduct(Long product_id, Long userId, UpdateProductRequest request){
+    public List<Product> modifySelectedProduct(Long product_id, String userEmail, UpdateProductRequest request){
         Product product = productRepository.findById(product_id).get();
         product.setProductName(request.getProduct_name());
         product.setSellingPrice(request.getSelling_price());
@@ -87,18 +95,18 @@ public class ProductService {
 
         productRepository.save(product);
 
-        return productRepository.findByUserId(userId);
+        return productRepository.findByUserEmail(userEmail);
     }
 
     // 선택된 상품정보 삭제
-    public Product deleteSelectedProduct(Long productId, Long userId){
-       return productRepository.deleteByProductIdAndUserId(productId, userId);
+    public Product deleteSelectedProduct(Long productId, String userEmail){
+       return productRepository.deleteByProductIdAndUserEmail(productId, userEmail);
 
     }
 
     // 전체 상품정보 삭제
-    public void deleteAllProduct(Long userId){
-        productRepository.deleteProductByUserId(userId);
+    public void deleteAllProduct(String userEmail){
+        productRepository.deleteProductByUserEmail(userEmail);
     }
 
 
