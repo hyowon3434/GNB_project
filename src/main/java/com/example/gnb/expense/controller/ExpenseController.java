@@ -42,13 +42,13 @@ public class ExpenseController {
     }
 
     // 선택 경비지출내역 조회
-    @GetMapping("/select")
+    @GetMapping("/get")
     public ResponseEntity<?> getSelectedExepnse(@RequestParam("expenseId") Long expenseId, HttpSession session){
         return ResponseEntity.ok(expenseService.findSelectedExpense(expenseId, getCurrentUserEmail(session)));
     }
 
     // 선택 경비지출내역 수정
-    @PutMapping("/select")
+    @PutMapping
     public ResponseEntity<?> modifySelectedExpense(@RequestParam("expenseId") Long expenseId,
                                                    @RequestBody ModifyExpenseRequest request,
                                                    HttpSession session){
@@ -56,7 +56,7 @@ public class ExpenseController {
     }
 
     // 선택 경비지출내역 삭제
-    @DeleteMapping("/select")
+    @DeleteMapping
     public ResponseEntity<?> deleteSelectedExpense(@RequestParam("expenseId") Long expenseId, HttpSession session){
         return ResponseEntity.ok(expenseService.deleteExpense(expenseId, getCurrentUserEmail(session)));
     }
