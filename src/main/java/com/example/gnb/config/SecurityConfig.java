@@ -47,19 +47,16 @@ public class SecurityConfig {
                 .permitAll()
                 .and()
                 .formLogin()
-                .loginPage("/loginForm")
-                .defaultSuccessUrl("/product")
+                .disable()
+                    .oauth2Login()
+                        .userInfoEndpoint()
+                            .userService(principalOauth2UserService)
                 .and()
-                        .oauth2Login()
-                                .loginPage("/loginForm")
-                                    .userInfoEndpoint()
-                                        .userService(principalOauth2UserService)
+                    .defaultSuccessUrl("/product", true)
                 .and()
-                        .defaultSuccessUrl("/product", true)
-                .and()
-                        .logout()
-                                .logoutSuccessUrl("/product")
-                                        .permitAll();
+                    .logout()
+                        .logoutSuccessUrl("/product")
+                                .permitAll();
 
         http
                 .securityContext()

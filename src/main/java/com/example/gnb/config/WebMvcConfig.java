@@ -24,15 +24,21 @@ public class WebMvcConfig implements WebMvcConfigurer {
         registry.viewResolver(resolver);
     }
 //    public void addCorsMapping(CorsRegistry registry){
-//        registry.addMapping("/**").allowedOrigins("http://localhost:3000").allowedMethods("GET");
-////        registry.addMapping("/product").allowedOrigins("http://localhost:3000").allowCredentials(true);
-////        registry.addMapping("/expense").allowedOrigins("http://localhost:3000").allowCredentials(true);
+//        registry.addMapping("/**").allowedOrigins("http://localhost:3000").allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH");
+//        registry.addMapping("/**").allowedOrigins("http://localhost:8080").allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH");
+//        registry.addMapping("/**").allowedOrigins("http://localhost:8080").allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH");
+//
+//
 //    }
 
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOriginPatterns("*")
-                .allowedMethods("GET", "POST", "PUT", "DELETE");
+                .allowedOriginPatterns(
+                        "http://localhost:3000",
+                        "http://localhost:8080",
+                        "http://gnbproject-env.eba-6e4mpxdq.ap-northeast-2.elasticbeanstalk.com"
+                )
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH");
     }
 
     @Bean
