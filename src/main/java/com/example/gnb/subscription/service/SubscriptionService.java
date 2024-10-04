@@ -1,6 +1,7 @@
 package com.example.gnb.subscription.service;
 
 import com.example.gnb.subscription.dto.SubscriptionDTO;
+import com.example.gnb.subscription.dto.updatePaymentMgrDTO;
 import com.example.gnb.subscription.entity.Subscription;
 import com.example.gnb.subscription.repository.SubscriptionRepository;
 import com.example.gnb.user.entity.User;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Service
 public class SubscriptionService {
@@ -45,6 +47,17 @@ public class SubscriptionService {
         user.setAutoRenewal(subscription.isAutoRenewal());
 
         return convertToDTO(subscription);
+    }
+
+    public Subscription updatePaymentMgr(updatePaymentMgrDTO request){
+        Subscription subscription = subscriptionRepository.findBySubscriptionId(request.getSubscriptionId());
+        subscription.setMgrName(request.getMgrEmail());
+        subscription.setMgrPhone(request.getMgrPhone());
+        subscription.setMgrEmail(request.getMgrEmail());
+
+        subscriptionRepository.save(subscription);
+
+        return subscription;
     }
 
     private BigDecimal calculatePrice(String planType){
