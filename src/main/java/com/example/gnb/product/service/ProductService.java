@@ -24,19 +24,30 @@ public class ProductService {
         float net_profit;
         float margin_rate;
         int expenses;
+        int freeShippingFee = 0;
 
         if (userEmail == null || userEmail.equals("annonymousUser")) {
             throw new NullPointerException("세션에 유저정보가 없습니다.");
         }
 
+        // 무료배송 체크 되어 있으면 무료배송비 0 -> 3000원
+        if (request.getIsFreeShipping() == true){
+            freeShippingFee = 3000;
+        }
+
         // 세금계산서 발급  = 상품 매입가의 10%
-        vat_invoice = (int) (request.getPurchasePrice() * 0.1);
+        if (request.getIsVat() != true) {
+            vat_invoice = (int) (request.getPurchasePrice() * 0.1);
+        }
+        vat_invoice = (int) request.getPurchasePrice();
+
+
 
         // 국세청 납부
         // 판매가 - 매입가 X 0.1
         tax_service_payment = (int) ((request.getSellingPrice() - request.getPurchasePrice()) * 0.1);
         expenses = (request.getPurchasePrice() + (vat_invoice + tax_service_payment) + request.getSalesExpenses() + request.getExtraExpenses() +
-                request.getPlatformFee() + 3000);
+                request.getPlatformFee() + freeShippingFee);
         //판매 순이익 = (상품판매가+배송비) - (매입가 + 부가가치세(세금계산서 발급 + 국세청 납부)
         // + 포장, 사은품 비용 + 기타비용 + 플랫폼 수수료 + 무료배송 비용)
         net_profit = (request.getSellingPrice() + request.getShippingCharge()) - expenses;
