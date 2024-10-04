@@ -17,48 +17,63 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "product_id")
     private Long productId;
-    @Column(nullable = false)
+    @Column(nullable = false, name = "userEmail")
     @Setter
     private String userEmail;
     @Setter
+    @Column(nullable = false, name = "productName")
     private String productName;
     @Setter
+    @Column(nullable = false, name = "sellingPrice")
     private Integer sellingPrice;
     @Setter
+    @Column(nullable = false, name = "purchasePrice")
     private Integer purchasePrice;
     @Setter
+    @Column(name = "shippingCharge")
     private Integer shippingCharge;
     @Setter
-    private String isVat;
+    @Column(name = "isVat")
+    private Boolean isVat;
     @Setter
+    @Column(name = "salesExpenses")
     private Integer salesExpenses;
     @Setter
+    @Column(name = "extraExpenses")
     private Integer extraExpenses;
     @Setter
+    @Column(name = "platformFee")
     private Integer platformFee;
     @Setter
+    @Column(name = "platformFeePer")
     private Float platformFeePer;
     @Setter
-    private String isFreeShipping;
+    @Column(name = "isFreeShipping")
+    private Boolean isFreeShipping;
     @CreationTimestamp // insert 쿼리문이 발생했을때, 현재시간 값을 적용
+    @Column(name = "createdAt")
     private Timestamp createdAt;
     @UpdateTimestamp // update 쿼리문이 발생했을때, 현재시간 값을 적용
+    @Column(name = "updatedAt")
     private Timestamp updatedAt;
     @Setter
-    @Column
+    @Column(name = "vatInvoice")
     private Integer vatInvoice;
     @Setter
+    @Column(name = "taxServicePayment")
     private Integer taxServicePayment;
     @Setter
+    @Column(name = "netProfit")
     private Integer netProfit;
     @Setter
+    @Column(name = "marginRate")
     private Float marginRate;
 
     @Builder
     public Product(Long productId, String productName, Integer sellingPrice,
-                   Integer purchasePrice, Integer shippingCharge, String isVat,
+                   Integer purchasePrice, Integer shippingCharge, Boolean isVat,
                    Integer salesExpenses, Integer extraExpenses, Integer platformFee,
-                   Float platformFeePer, String isFreeShipping, Integer vatInvoice,
+                   Float platformFeePer, Boolean isFreeShipping, Integer vatInvoice,
                    Integer taxServicePayment, Integer netProfit, Float marginRate,
                    String userEmail){
         this.productId = productId;
