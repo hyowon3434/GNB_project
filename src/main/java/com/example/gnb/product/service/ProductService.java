@@ -110,8 +110,8 @@ public class ProductService {
     }
 
     // 선택된 상품정보 삭제
-    public Product deleteSelectedProduct(Long productId, String userEmail){
-       return productRepository.deleteByProductIdAndUserEmail(productId, userEmail);
+    public void deleteSelectedProduct(Long productId, String userEmail){
+        productRepository.deleteByProductIdAndUserEmail(productId, userEmail);
 
     }
 

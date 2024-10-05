@@ -46,9 +46,8 @@ public class UserAuthController {
             );
             SecurityContextHolder.getContext().setAuthentication(authentication);
             User user = userRepository.findByEmail(loginRequest.getEmail());
-            log.warn("현재 로그인한 유저정보" + user.toString());
             session.setAttribute("user", user);
-
+            //log.warn("토큰 인증된 유저 이메일 : " + tokenProvider.getUserEmailFromJWT(jwt));
             jwt = tokenProvider.generateToken(authentication);
         }catch (Exception e){
             log.error("Authentication failed", e);
