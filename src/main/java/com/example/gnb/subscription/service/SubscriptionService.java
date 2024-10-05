@@ -1,18 +1,22 @@
 package com.example.gnb.subscription.service;
 
 import com.example.gnb.subscription.dto.SubscriptionDTO;
+import com.example.gnb.subscription.dto.updatePaymentMgrDTO;
 import com.example.gnb.subscription.entity.Subscription;
 import com.example.gnb.subscription.repository.SubscriptionRepository;
 import com.example.gnb.user.entity.User;
 import com.example.gnb.user.repository.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Service
+@Slf4j
 public class SubscriptionService {
 
     @Autowired
@@ -45,6 +49,23 @@ public class SubscriptionService {
         user.setAutoRenewal(subscription.isAutoRenewal());
 
         return convertToDTO(subscription);
+    }
+
+    public Subscription updatePaymentMgr(updatePaymentMgrDTO request) throws NullPointerException{
+
+        Subscription subscription = subscriptionRepository.findBySubscriptionId(request.getSubscriptionId());
+
+        if (subscription == null) {
+            throw new NullPointerException("조회된 구독 정보가 없습니다.");
+        }
+
+        subscription.setMgrName(request.getMgrEmail());
+        subscription.setMgrPhone(request.getMgrPhone());
+        subscription.setMgrEmail(request.getMgrEmail());
+
+        subscriptionRepository.save(subscription);
+
+        return subscription;
     }
 
     private BigDecimal calculatePrice(String planType){

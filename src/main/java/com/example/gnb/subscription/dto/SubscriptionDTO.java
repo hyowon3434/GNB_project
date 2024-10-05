@@ -13,4 +13,7 @@ public class SubscriptionDTO {
     private LocalDateTime startDate;
     private LocalDateTime endDate;
     private boolean autoRenewal;
+    private String mgrName;
+    private String mgrPhone;
+    private String mgrEmail;
 }

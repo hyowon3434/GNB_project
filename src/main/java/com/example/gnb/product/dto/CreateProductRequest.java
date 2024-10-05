@@ -10,11 +10,11 @@ public class CreateProductRequest {
     private Integer sellingPrice;
     private Integer purchasePrice;
     private Integer shippingCharge;
-    private String isVat;
+    private Boolean isVat;
     private Integer salesExpenses;
     private Integer extraExpenses;
     private Integer platformFee;
     private Float platformFeePer;
-    private String isFreeShipping;
+    private Boolean isFreeShipping;
 
 }

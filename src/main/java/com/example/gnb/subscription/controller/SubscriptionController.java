@@ -1,13 +1,14 @@
 package com.example.gnb.subscription.controller;
 
+import com.example.gnb.subscription.dto.updatePaymentMgrDTO;
+import com.example.gnb.subscription.service.SubscriptionService;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.net.URI;
@@ -20,6 +21,7 @@ import java.util.Map;
 
 @RestController
 @Slf4j
+@RequestMapping("/payment")
 public class SubscriptionController {
 
     @Value("${toss.payment.secret-key}")
@@ -28,6 +30,8 @@ public class SubscriptionController {
     @Value("${toss.payment.toss-api-url}")
     private String tossApiUrl;
     private ObjectMapper objectMapper = new ObjectMapper();
+    @Autowired
+    private SubscriptionService subscriptionService;
 
     @PostMapping("/success")
     public ResponseEntity<?> newPayment(@RequestParam Map<String, String> param) throws IOException, InterruptedException {
@@ -51,5 +55,11 @@ public class SubscriptionController {
 //            return responseBody.toPrettyString();
 //        }
         return ResponseEntity.ok(response);
+    }
+
+    @PutMapping
+    public ResponseEntity<?> putPaymentMgr(@RequestBody updatePaymentMgrDTO request){
+        log.warn(request.toString());
+        return ResponseEntity.ok(subscriptionService.updatePaymentMgr(request));
     }
 }

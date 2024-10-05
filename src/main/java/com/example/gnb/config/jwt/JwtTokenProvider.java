@@ -46,15 +46,19 @@ public class JwtTokenProvider {
             return true;
         } catch (SignatureException ex) {
             // 로그 처리
+            return false;
         } catch (MalformedJwtException ex) {
             // 로그 처리
+            return false;
         } catch (ExpiredJwtException ex) {
             // 로그 처리
+            return false;
         } catch (UnsupportedJwtException ex) {
             // 로그 처리
+            return false;
         } catch (IllegalArgumentException ex) {
             // 로그 처리
+            return false;
         }
-        return false;
     }
 }

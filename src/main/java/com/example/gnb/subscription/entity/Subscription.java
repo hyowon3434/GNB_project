@@ -20,31 +20,42 @@ public class Subscription {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long subscriptionId;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "userId")
     private User user;
-    @Column(nullable = false)
+    @Column(nullable = false, name = "planType")
     private String planType;
-    @Column(nullable = false)
+    @Column(nullable = false, name = "price")
     private BigDecimal price;
-    @Column(nullable = false)
+    @Column(name = "mgrName")
+    private String mgrName;
+    @Column(name = "mgrPhone")
+    private String mgrPhone;
+    @Column(name = "mgrEmail")
+    private String mgrEmail;
+    @Column(nullable = false, name = "startDate")
     private LocalDateTime startDate;
-    @Column(nullable = false)
+    @Column(nullable = false, name = "endDate")
     private LocalDateTime endDate;
-    @Column(nullable = false)
+    @Column(nullable = false, name = "autoRenewal")
     private boolean autoRenewal;
     @CreationTimestamp
+    @Column(nullable = false, name = "createdAt")
     private LocalDateTime createdAt;
 
     @Builder
     public Subscription(User user, String planType,
                         BigDecimal price, LocalDateTime startDate,
-                        LocalDateTime endDate, boolean autoRenewal) {
+                        LocalDateTime endDate, boolean autoRenewal,
+                        String mgrName, String mgrPhone, String mgrEmail) {
         this.user = user;
         this.planType = planType;
         this.price = price;
         this.startDate = startDate;
         this.endDate = endDate;
         this.autoRenewal = autoRenewal;
+        this.mgrName = mgrName;
+        this.mgrPhone = mgrPhone;
+        this.mgrEmail = mgrEmail;
     }
 }
