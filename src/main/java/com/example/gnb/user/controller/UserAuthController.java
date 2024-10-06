@@ -59,9 +59,13 @@ public class UserAuthController {
     }
 
     @PostMapping("/join")
-    public ResponseEntity<?> registerUser(@RequestBody UserJoinRequest joinRequest) {
+    public ResponseEntity<?> registerUser(@RequestBody UserJoinRequest joinRequest,
+                                          @RequestHeader("Authorization") String token) throws Exception{
+        if (token != null) {
+            throw new Exception("이미 로그인된 사용자입니다.");
+        }
         User user = userService.registerUser(joinRequest);
-        return ResponseEntity.ok("User registered successfully");
+        return ResponseEntity.ok(user);
     }
 
     @GetMapping("/callback")
